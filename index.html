@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do App</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1 class="title">To Do App</h1>
+      </header>
+      <section class="task-form__section">
+        <form class="task-form" id="task-form" action="submit">
+          <label for="task-form-input">Ingresa una nueva tarea</label>
+          <textarea
+            class="task-form__input"
+            id="task-form-input"
+            type="text"
+            placeholder="Tarea nueva"
+          ></textarea>
+          <button type="submit">Agregar</button>
+        </form>
+      </section>
+
+      <section class="task-filter__section">
+        <nav class="task-filter__menu">
+          <ul class="task-filter__menu-container">
+            <li class="task-filter__menu-item"><button>Nuevas</button></li>
+            <li class="task-filter__menu-item"><button>Programadas</button></li>
+            <li class="task-filter__menu-item"><button>Iniciadas</button></li>
+            <li class="task-filter__menu-item"><button>Terminadas</button></li>
+          </ul>
+        </nav>
+      </section>
+
+      <section class="task-columns__container">
+        <section class="task-column task-column--new">
+          <h3 class="task-columns__title">Tareas nuevas</h3>
+          <ul class="task-list-new">
+            
+          </ul>
+        </section>
+        <section class="task-column task-column--scheduled">
+          <h3 class="task-columns__title">Tareas programadas</h3>
+          <ul class="task-list-scheduled">
+            
+          </ul>
+        </section>
+        <section class="task-column task-column--in-progress">
+          <h3 class="task-columns__title">Tareas iniciadas</h3>
+          <ul class="task-list-in-progress">
+            
+          </ul>
+        </section>
+        <section class="task-column task-column--done">
+          <h3 class="task-columns__title">Tareas finalizadas</h3>
+          <ul class="task-list-done">
+            
+          </ul>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
