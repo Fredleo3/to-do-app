@@ -1,9 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do App</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Iconos -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=keyboard_arrow_down,more_vert&display=block"
+    />
   </head>
   <body>
     <main>
@@ -12,7 +29,9 @@
       </header>
       <section class="task-form__section">
         <form class="task-form" id="task-form" action="submit">
-          <label for="task-form-input">Ingresa una nueva tarea</label>
+          <label class="task-form__label" for="task-form-input"
+            >Ingresa una nueva tarea</label
+          >
           <textarea
             class="task-form__input"
             id="task-form-input"
@@ -23,38 +42,95 @@
         </form>
       </section>
 
-      <section class="task-filter__section">
-        <nav class="task-filter__menu">
-          <ul class="task-filter__menu-container">
-            <li class="task-filter__menu-item"><button>Nuevas</button></li>
-            <li class="task-filter__menu-item"><button>Programadas</button></li>
-            <li class="task-filter__menu-item"><button>Iniciadas</button></li>
-            <li class="task-filter__menu-item"><button>Terminadas</button></li>
-          </ul>
-        </nav>
+<header>
+  <h2 class="task-filter-title">Tareas</h2>
+</header>
+
+      <section class="task-filter__section">        
+        <button class="task-filter__select" name="task-filter" id="task-filter">
+          <h3 class="task-filter__option option-selected" value="new">
+            Tareas<span> Nuevas</span>
+          </h3>
+          <span class="material-symbols-outlined task-filter__option-icon"
+            >keyboard_arrow_down</span
+          >
+        </button>
+
+        <section class="task-filter__group hidden">
+          <button class="task-filter__option" value="scheduled">
+            Tareas<span> Programadas</span>
+          </button>
+          <button class="task-filter__option" value="in-progress">
+            Tareas<span> Iniciadas</span>
+          </button>
+          <button class="task-filter__option" value="done">
+            Tareas<span> Finalizadas</span>
+          </button>
+        </section>
       </section>
 
       <section class="task-columns__container">
-        <section class="task-column task-column--new">
-          <h3 class="task-columns__title">Tareas nuevas</h3>
+        <section
+          class="task-column task-column--new column-selected"
+          id="task-new"
+        >
+          <h3 class="task-columns__title">Tareas <span>Nuevas</span></h3>
           <ul class="task-list-new">
-            
+            <li class="task">
+              <span class="task-text">
+                Lorem ipsum dolor sit amet.</span>
+              
+              <section class="task-action__group hidden">
+                <h5 class="task-action__title">Mover a tareas</h5>
+                <button class="task-action__option" value="scheduled">
+                  Programadas
+                </button>
+                <button class="task-action__option" value="in-progress">
+                  Iniciadas
+                </button>
+                <button class="task-action__option" value="done">
+                  Finalizadas
+                </button>
+              </section>
+
+              <button class="task-action">
+                <span class="material-symbols-outlined"> more_vert </span>
+              </button>
+
+              
+            </li>
+            <li class="task">
+              <span class="task-text">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Deserunt accusantium repellendus temporibus explicabo tempore
+                aut hic quibusdam enim fuga rerum!
+              </span>
+              <button class="task-action">
+                <span class="material-symbols-outlined"> more_vert </span>
+              </button>
+            </li>
           </ul>
         </section>
-        <section class="task-column task-column--scheduled">
-          <h3 class="task-columns__title">Tareas programadas</h3>
+
+        <section class="task-column task-column--scheduled" id="task-scheduled">
+          <h3 class="task-columns__title">Tareas <span>Programadas</span></h3>
           <ul class="task-list-scheduled">
             
           </ul>
         </section>
-        <section class="task-column task-column--in-progress">
-          <h3 class="task-columns__title">Tareas iniciadas</h3>
+
+        <section
+          class="task-column task-column--in-progress"
+          id="task-in-progress"
+        >
+          <h3 class="task-columns__title">Tareas <span>Iniciadas</span></h3>
           <ul class="task-list-in-progress">
             
           </ul>
         </section>
-        <section class="task-column task-column--done">
-          <h3 class="task-columns__title">Tareas finalizadas</h3>
+
+        <section class="task-column task-column--done" id="task-done">
+          <h3 class="task-columns__title">Tareas <span>Finalizadas</span></h3>
           <ul class="task-list-done">
             
           </ul>
