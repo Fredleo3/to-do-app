@@ -37,6 +37,7 @@
             id="task-form-input"
             type="text"
             placeholder="Tarea nueva"
+            required
           ></textarea>
           <button type="submit">Agregar</button>
         </form>
@@ -47,8 +48,8 @@
 </header>
 
       <section class="task-filter__section">        
-        <button class="task-filter__select" name="task-filter" id="task-filter">
-          <h3 class="task-filter__option option-selected" value="new">
+        <button class="task-filter__select" id="task-filter">
+          <h3 class="option-selected">
             Tareas<span> Nuevas</span>
           </h3>
           <span class="material-symbols-outlined task-filter__option-icon"
@@ -56,7 +57,10 @@
           >
         </button>
 
-        <section class="task-filter__group hidden">
+        <section class="task-filter__group hidden" id="task-filter-group">
+          <button class="task-filter__option hidden" value="new">
+            Tareas<span> Nuevas</span>
+          </button>
           <button class="task-filter__option" value="scheduled">
             Tareas<span> Programadas</span>
           </button>
@@ -75,46 +79,14 @@
           id="task-new"
         >
           <h3 class="task-columns__title">Tareas <span>Nuevas</span></h3>
-          <ul class="task-list-new">
-            <li class="task">
-              <span class="task-text">
-                Lorem ipsum dolor sit amet.</span>
-              
-              <section class="task-action__group hidden">
-                <h5 class="task-action__title">Mover a tareas</h5>
-                <button class="task-action__option" value="scheduled">
-                  Programadas
-                </button>
-                <button class="task-action__option" value="in-progress">
-                  Iniciadas
-                </button>
-                <button class="task-action__option" value="done">
-                  Finalizadas
-                </button>
-              </section>
-
-              <button class="task-action">
-                <span class="material-symbols-outlined"> more_vert </span>
-              </button>
-
-              
-            </li>
-            <li class="task">
-              <span class="task-text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Deserunt accusantium repellendus temporibus explicabo tempore
-                aut hic quibusdam enim fuga rerum!
-              </span>
-              <button class="task-action">
-                <span class="material-symbols-outlined"> more_vert </span>
-              </button>
-            </li>
+          <ul class="task-list-new" id="task-list-new">
+            
           </ul>
         </section>
 
         <section class="task-column task-column--scheduled" id="task-scheduled">
           <h3 class="task-columns__title">Tareas <span>Programadas</span></h3>
-          <ul class="task-list-scheduled">
+          <ul class="task-list-scheduled" id="task-list-scheduled">
             
           </ul>
         </section>
@@ -124,18 +96,19 @@
           id="task-in-progress"
         >
           <h3 class="task-columns__title">Tareas <span>Iniciadas</span></h3>
-          <ul class="task-list-in-progress">
+          <ul class="task-list-in-progress" id="task-list-in-progress">
             
           </ul>
         </section>
 
         <section class="task-column task-column--done" id="task-done">
           <h3 class="task-columns__title">Tareas <span>Finalizadas</span></h3>
-          <ul class="task-list-done">
+          <ul class="task-list-done" id="task-list-done">
             
           </ul>
         </section>
       </section>
     </main>
+    <script src="app.js"></script>
   </body>
 </html>

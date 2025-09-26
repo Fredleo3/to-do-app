@@ -186,11 +186,16 @@ main{
 }
 
 .option-selected {
+    color: var(--text-color-1);
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-align: left;
     padding: 0;
 }
 
 .task-columns__title span,
-.task-filter__option span {
+.task-filter__option span,
+.option-selected span {
     font-weight: 700;    
 }
 
