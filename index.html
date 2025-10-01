@@ -50,7 +50,7 @@
       <section class="task-filter__section">        
         <button class="task-filter__select" id="task-filter">
           <h3 class="option-selected">
-            Tareas<span> Nuevas</span>
+            Tareas<span class="task-filter__column-name"> Nuevas</span>
           </h3>
           <span class="material-symbols-outlined task-filter__option-icon"
             >keyboard_arrow_down</span
@@ -76,17 +76,17 @@
       <section class="task-columns__container">
         <section
           class="task-column task-column--new column-selected"
-          id="task-new"
+          id="task-new" data-value="new"
         >
           <h3 class="task-columns__title">Tareas <span>Nuevas</span></h3>
-          <ul class="task-list-new" id="task-list-new">
+          <ul class="task-list task-list-new" id="task-list-new">
             
           </ul>
         </section>
 
-        <section class="task-column task-column--scheduled" id="task-scheduled">
+        <section class="task-column task-column--scheduled" id="task-scheduled" data-value="scheduled">
           <h3 class="task-columns__title">Tareas <span>Programadas</span></h3>
-          <ul class="task-list-scheduled" id="task-list-scheduled">
+          <ul class="task-list task-list-scheduled" id="task-list-scheduled">
             
           </ul>
         </section>
@@ -94,16 +94,17 @@
         <section
           class="task-column task-column--in-progress"
           id="task-in-progress"
+          data-value="in-progress"
         >
           <h3 class="task-columns__title">Tareas <span>Iniciadas</span></h3>
-          <ul class="task-list-in-progress" id="task-list-in-progress">
+          <ul class="task-list task-list-in-progress" id="task-list-in-progress">
             
           </ul>
         </section>
 
-        <section class="task-column task-column--done" id="task-done">
+        <section class="task-column task-column--done" id="task-done" data-value="done"> 
           <h3 class="task-columns__title">Tareas <span>Finalizadas</span></h3>
-          <ul class="task-list-done" id="task-list-done">
+          <ul class="task-list task-list-done" id="task-list-done">
             
           </ul>
         </section>
