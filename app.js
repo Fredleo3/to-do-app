@@ -90,12 +90,20 @@ const idGenerator = () => Date.now();
 
 // Renderizar tareas ________________________________________________________________
 
+const taskStateList = {
+  "new": newTaskList,
+  "scheduled": scheduledTaskList,
+  "in-progress": inProgressTaskList,
+  "done": doneTaskList,
+};
+
 const renderTasks = (taskList) => {
-  for (let i = 0; i < taskList.length; i++) {
+  let num = 0;
+  taskList.forEach((task) => {
     const taskCode = `
-        <li class="task" data-task-id='${taskList[i].taskId}'>
+        <li class="task" data-task-id='${task.taskId}'>
               <span class="task-text">
-                ${taskList[i].text}</span>              
+                ${task.text}</span>              
               <section class="task-action__group hidden">
                 <h5 class="task-action__title">Mover a tareas</h5>
                 <button class="task-action__option" value="new">
@@ -117,15 +125,8 @@ const renderTasks = (taskList) => {
               </button>              
             </li>
         `;
-    taskList[i].state === "new" ? (newTaskList.innerHTML += taskCode) : 0;
-    taskList[i].state === "scheduled"
-      ? (scheduledTaskList.innerHTML += taskCode)
-      : 0;
-    taskList[i].state === "in-progress"
-      ? (inProgressTaskList.innerHTML += taskCode)
-      : 0;
-    taskList[i].state === "done" ? (doneTaskList.innerHTML += taskCode) : 0;
-  }
+    taskStateList[task.state].insertAdjacentHTML("beforeend", taskCode);
+  });
 };
 
 // Filtro _____________________________________________________________
