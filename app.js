@@ -94,7 +94,7 @@ const taskStateList = {
   "new": newTaskList,
   "scheduled": scheduledTaskList,
   "in-progress": inProgressTaskList,
-  "done": doneTaskList,
+  "done": doneTaskList
 };
 
 const renderTasks = (taskList) => {
@@ -139,24 +139,27 @@ const filter = (selected) => {
   changeSelectName(selected.value);
 };
 
-const getColumn = (selected) => {
-  let columnId = "";
-  selected === "new" ? (columnId = "task-new") : "";
-  selected === "scheduled" ? (columnId = "task-scheduled") : "";
-  selected === "in-progress" ? (columnId = "task-in-progress") : "";
-  selected === "done" ? (columnId = "task-done") : "";
+const columnIdList = {
+  "new": "task-new",
+  "scheduled": "task-scheduled",
+  "in-progress": "task-in-progress",
+  "done": "task-done"
+}
 
+const getColumn = (selected) => {
+  let columnId = columnIdList[selected];
   return document.getElementById(columnId).closest("section");
 };
 
+const columnNameList = {
+  "new": " Nuevas",
+  "scheduled": " Programadas",
+  "in-progress": " Iniciadas",
+  "done": " Finalizadas"
+}
+
 const changeSelectName = (value) => {
-  let name = "";
-
-  value === "new" ? (name = " Nuevas") : "";
-  value === "scheduled" ? (name = " Programadas") : "";
-  value === "in-progress" ? (name = " Iniciadas") : "";
-  value === "done" ? (name = " Finalizadas") : "";
-
+  let name = columnNameList[value];
   const columnName = document.querySelector(".task-filter__column-name");
   columnName.innerHTML = name;
 };
@@ -203,11 +206,15 @@ const closeAllActions = () => {
   }
 };
 
+const valueColumList = {
+  "new": newTaskList,
+  "scheduled": scheduledTaskList,
+  "in-progress": inProgressTaskList,
+  "done": doneTaskList
+}
+
 const moveToCol = (columnTarget, task) => {
-  columnTarget === "new" ? newTaskList.appendChild(task) : 0;
-  columnTarget === "scheduled" ? scheduledTaskList.appendChild(task) : 0;
-  columnTarget === "in-progress" ? inProgressTaskList.appendChild(task) : 0;
-  columnTarget === "done" ? doneTaskList.appendChild(task) : 0;
+  valueColumList[columnTarget].appendChild(task) 
   const taskId = task.dataset.taskId;
   upadateTask(taskId, "state", columnTarget);
 };
