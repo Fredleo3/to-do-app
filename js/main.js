@@ -1,15 +1,15 @@
- import { handleFilterButton, handleFilterOption, loadFilter } from "./filter.js"
+import { handleFilterButton, handleFilterOption, loadFilter } from "./filter.js"
+import { handleActionButton, handleMoveAction, renderTasks } from "./tasks.js"
 
 
 
+// const inputTask = document.getElementById("task-form-input");
+// const form = document.getElementById("task-form");
 
-const inputTask = document.getElementById("task-form-input");
-const form = document.getElementById("task-form");
-
-const newTaskList = document.getElementById("task-list-new");
-const scheduledTaskList = document.getElementById("task-list-scheduled");
-const inProgressTaskList = document.getElementById("task-list-in-progress");
-const doneTaskList = document.getElementById("task-list-done");
+// const newTaskList = document.getElementById("task-list-new");
+// const scheduledTaskList = document.getElementById("task-list-scheduled");
+// const inProgressTaskList = document.getElementById("task-list-in-progress");
+// const doneTaskList = document.getElementById("task-list-done");
 
 // Inicio de la aplicación
 
@@ -58,96 +58,96 @@ document.addEventListener("click", (e) => {
 //   return true;
 // };
 
-//  Abriendo el menú de opciones
-const handleActionButton = (e) => {
-  const actionBtn = e.target.closest(".task-action");
+// //  Abriendo el menú de opciones
+// const handleActionButton = (e) => {
+//   const actionBtn = e.target.closest(".task-action");
 
-  if (!actionBtn) return false;
+//   if (!actionBtn) return false;
 
-  const column = e.target.closest("section");
-  const task = e.target.closest("li");
-  const optionMenu = task.querySelector(".task-action__group");
-  if (isOpen(optionMenu)) {
-    optionMenu.classList.remove("open");
-    optionMenu.classList.add("hidden");
-  } else {
-    closeAllActions();
-    optionMenu.classList.add("open");
-    optionMenu.classList.remove("hidden");
-    updateOptions(column, optionMenu);
-  }
-  return true;
-};
+//   const column = e.target.closest("section");
+//   const task = e.target.closest("li");
+//   const optionMenu = task.querySelector(".task-action__group");
+//   if (isOpen(optionMenu)) {
+//     optionMenu.classList.remove("open");
+//     optionMenu.classList.add("hidden");
+//   } else {
+//     closeAllActions();
+//     optionMenu.classList.add("open");
+//     optionMenu.classList.remove("hidden");
+//     updateOptions(column, optionMenu);
+//   }
+//   return true;
+// };
 
-// clickeando una opción para mover la tarea
-const handleMoveAction = (e) => {
-  const moveActions = e.target.closest(".task-action__option");
+// // clickeando una opción para mover la tarea
+// const handleMoveAction = (e) => {
+//   const moveActions = e.target.closest(".task-action__option");
 
-  if (!moveActions) return false
+//   if (!moveActions) return false
 
-    closeAllActions();
-    const columnTarget = moveActions.value;
-    const task = e.target.closest("li");
-    moveToCol(columnTarget, task);
-    return true
-};
+//     closeAllActions();
+//     const columnTarget = moveActions.value;
+//     const task = e.target.closest("li");
+//     moveToCol(columnTarget, task);
+//     return true
+// };
 
-// Nueva tarea ______________________________________________________________________
+// // Nueva tarea ______________________________________________________________________
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  newTask(inputTask.value.trim());
-});
+// form.addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   newTask(inputTask.value.trim());
+// });
 
-const newTask = (newText) => {
-  const task = { taskId: idGenerator(), text: newText, state: "new" };
-  saveTask(task);
-  renderTasks([task]);
-  inputTask.value = "";
-};
+// const newTask = (newText) => {
+//   const task = { taskId: idGenerator(), text: newText, state: "new" };
+//   saveTask(task);
+//   renderTasks([task]);
+//   inputTask.value = "";
+// };
 
-const idGenerator = () => Date.now();
+// const idGenerator = () => Date.now();
 
-// Renderizar tareas ________________________________________________________________
+// // Renderizar tareas ________________________________________________________________
 
-const taskStateList = {
-  new: newTaskList,
-  scheduled: scheduledTaskList,
-  "in-progress": inProgressTaskList,
-  done: doneTaskList,
-};
+// const taskStateList = {
+//   new: newTaskList,
+//   scheduled: scheduledTaskList,
+//   "in-progress": inProgressTaskList,
+//   done: doneTaskList,
+// };
 
-const renderTasks = (taskList) => {
-  let num = 0;
-  taskList.forEach((task) => {
-    const taskCode = `
-        <li class="task" data-task-id='${task.taskId}'>
-              <span class="task-text">
-                ${task.text}</span>              
-              <section class="task-action__group hidden">
-                <h5 class="task-action__title">Mover a tareas</h5>
-                <button class="task-action__option" value="new">
-                  Nuevas
-                </button>
-                <button class="task-action__option" value="scheduled">
-                  Programadas
-                </button>
-                <button class="task-action__option" value="in-progress">
-                  Iniciadas
-                </button>
-                <button class="task-action__option" value="done">
-                  Finalizadas
-                </button>
-              </section>
+// const renderTasks = (taskList) => {
+//   let num = 0;
+//   taskList.forEach((task) => {
+//     const taskCode = `
+//         <li class="task" data-task-id='${task.taskId}'>
+//               <span class="task-text">
+//                 ${task.text}</span>              
+//               <section class="task-action__group hidden">
+//                 <h5 class="task-action__title">Mover a tareas</h5>
+//                 <button class="task-action__option" value="new">
+//                   Nuevas
+//                 </button>
+//                 <button class="task-action__option" value="scheduled">
+//                   Programadas
+//                 </button>
+//                 <button class="task-action__option" value="in-progress">
+//                   Iniciadas
+//                 </button>
+//                 <button class="task-action__option" value="done">
+//                   Finalizadas
+//                 </button>
+//               </section>
 
-              <button class="task-action">
-                <span class="material-symbols-outlined"> more_vert </span>
-              </button>              
-            </li>
-        `;
-    taskStateList[task.state].insertAdjacentHTML("beforeend", taskCode);
-  });
-};
+//               <button class="task-action">
+//                 <span class="material-symbols-outlined"> more_vert </span>
+//               </button>              
+//             </li>
+//         `;
+//     taskStateList[task.state].insertAdjacentHTML("beforeend", taskCode);
+//   });
+// };
 
 // Filtro _____________________________________________________________
 
@@ -226,30 +226,30 @@ export const closeAllActions = () => {
   }
 };
 
-const valueColumList = {
-  new: newTaskList,
-  scheduled: scheduledTaskList,
-  "in-progress": inProgressTaskList,
-  done: doneTaskList,
-};
+// const valueColumList = {
+//   new: newTaskList,
+//   scheduled: scheduledTaskList,
+//   "in-progress": inProgressTaskList,
+//   done: doneTaskList,
+// };
 
-const moveToCol = (columnTarget, task) => {
-  valueColumList[columnTarget].appendChild(task);
-  const taskId = task.dataset.taskId;
-  updateTask(taskId, "state", columnTarget);
-};
+// const moveToCol = (columnTarget, task) => {
+//   valueColumList[columnTarget].appendChild(task);
+//   const taskId = task.dataset.taskId;
+//   updateTask(taskId, "state", columnTarget);
+// };
 
-const updateOptions = (column, optionGroup) => {
-  const allOptions = optionGroup.querySelectorAll(".task-action__option");
+// const updateOptions = (column, optionGroup) => {
+//   const allOptions = optionGroup.querySelectorAll(".task-action__option");
 
-  allOptions.forEach((option) => {
-    if (option.value != column.dataset.value) {
-      option.classList.remove("hidden");
-    } else {
-      option.classList.add("hidden");
-    }
-  });
-};
+//   allOptions.forEach((option) => {
+//     if (option.value != column.dataset.value) {
+//       option.classList.remove("hidden");
+//     } else {
+//       option.classList.add("hidden");
+//     }
+//   });
+// };
 
 // LocalStorage _____________________________________________________________________________
 
@@ -265,7 +265,7 @@ const getFilter = () => {
 
 // --- LocalStorage-Tareas
 
-const saveTask = (task) => {
+export const saveTask = (task) => {
   let allTasks = getAllTasks();
   allTasks.push(task);
   localStorage.setItem("allTasks", JSON.stringify(allTasks));
@@ -275,7 +275,7 @@ const getAllTasks = () => {
   return JSON.parse(localStorage.getItem("allTasks")) || [];
 };
 
-const updateTask = (id, key, value) => {
+export const updateTask = (id, key, value) => {
   let allTasks = getAllTasks();
 
   for (let i = 0; i < allTasks.length; i++) {
@@ -283,6 +283,5 @@ const updateTask = (id, key, value) => {
       allTasks[i][key] = value;
     }
   }
-
   localStorage.setItem("allTasks", JSON.stringify(allTasks));
 };
