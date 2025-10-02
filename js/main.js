@@ -1,6 +1,6 @@
 import { handleFilterButton, handleFilterOption, loadFilter } from "./filter.js"
 import { handleActionButton, handleMoveAction, renderTasks } from "./tasks.js"
-
+import { getAllTasks, getFilter } from "./storage.js"
 
 
 // const inputTask = document.getElementById("task-form-input");
@@ -251,37 +251,37 @@ export const closeAllActions = () => {
 //   });
 // };
 
-// LocalStorage _____________________________________________________________________________
+// // LocalStorage _____________________________________________________________________________
 
-// --- LocalStorage-Filtro
+// // --- LocalStorage-Filtro
 
-export const saveFilter = (value) => {
-  localStorage.setItem("filter", value);
-};
+// export const saveFilter = (value) => {
+//   localStorage.setItem("filter", value);
+// };
 
-const getFilter = () => {
-  return localStorage.getItem("filter");
-};
+// const getFilter = () => {
+//   return localStorage.getItem("filter");
+// };
 
-// --- LocalStorage-Tareas
+// // --- LocalStorage-Tareas
 
-export const saveTask = (task) => {
-  let allTasks = getAllTasks();
-  allTasks.push(task);
-  localStorage.setItem("allTasks", JSON.stringify(allTasks));
-};
+// export const saveTask = (task) => {
+//   let allTasks = getAllTasks();
+//   allTasks.push(task);
+//   localStorage.setItem("allTasks", JSON.stringify(allTasks));
+// };
 
-const getAllTasks = () => {
-  return JSON.parse(localStorage.getItem("allTasks")) || [];
-};
+// const getAllTasks = () => {
+//   return JSON.parse(localStorage.getItem("allTasks")) || [];
+// };
 
-export const updateTask = (id, key, value) => {
-  let allTasks = getAllTasks();
+// export const updateTask = (id, key, value) => {
+//   let allTasks = getAllTasks();
 
-  for (let i = 0; i < allTasks.length; i++) {
-    if (allTasks[i].taskId === +id) {
-      allTasks[i][key] = value;
-    }
-  }
-  localStorage.setItem("allTasks", JSON.stringify(allTasks));
-};
+//   for (let i = 0; i < allTasks.length; i++) {
+//     if (allTasks[i].taskId === +id) {
+//       allTasks[i][key] = value;
+//     }
+//   }
+//   localStorage.setItem("allTasks", JSON.stringify(allTasks));
+// };

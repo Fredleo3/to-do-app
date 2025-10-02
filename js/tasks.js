@@ -1,4 +1,6 @@
-import { saveTask, updateTask, isOpen, closeAllActions } from "./main.js";
+import {  isOpen, closeAllActions } from "./main.js";
+import { saveTask, updateTask } from "./storage.js"
+
 
 const inputTask = document.getElementById("task-form-input");
 const form = document.getElementById("task-form");

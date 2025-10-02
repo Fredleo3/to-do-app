@@ -1,4 +1,5 @@
-import { isOpen, closeAllActions, saveFilter } from "./main.js";
+import { isOpen, closeAllActions } from "./main.js";
+import { saveFilter } from "./storage.js"
 
 
 // Manejadores de eventos ___________________________________________________________
