@@ -1,3 +1,8 @@
+ import { handleFilterButton, handleFilterOption, loadFilter } from "./filter.js"
+
+
+
+
 const inputTask = document.getElementById("task-form-input");
 const form = document.getElementById("task-form");
 
@@ -24,34 +29,34 @@ document.addEventListener("click", (e) => {
 // Manejadores de eventos ___________________________________________________________
 
 // Abriendo el filtro de tareas en móvil
-const handleFilterButton = (e) => {
-  const filterBtn = e.target.closest("#task-filter");
+// const handleFilterButton = (e) => {
+//   const filterBtn = e.target.closest("#task-filter");
 
-  if (!filterBtn) return false;
+//   if (!filterBtn) return false;
 
-  const filterGroup = document.getElementById("task-filter-group");
-  if (isOpen(filterGroup)) {
-    filterGroup.classList.remove("open");
-    filterGroup.classList.add("hidden");
-  } else {
-    closeAllActions();
-    filterGroup.classList.remove("hidden");
-    filterGroup.classList.add("open");
-  }
-  return true;
-};
+//   const filterGroup = document.getElementById("task-filter-group");
+//   if (isOpen(filterGroup)) {
+//     filterGroup.classList.remove("open");
+//     filterGroup.classList.add("hidden");
+//   } else {
+//     closeAllActions();
+//     filterGroup.classList.remove("hidden");
+//     filterGroup.classList.add("open");
+//   }
+//   return true;
+// };
 
 // Seleccionando una columna
-const handleFilterOption = (e) => {
-  const filterOption = e.target.closest(".task-filter__option");
+// const handleFilterOption = (e) => {
+//   const filterOption = e.target.closest(".task-filter__option");
 
-  if (!filterOption) return false;
+//   if (!filterOption) return false;
 
-  closeAllActions();
-  filter(filterOption);
-  saveFilter(filterOption.value);
-  return true;
-};
+//   closeAllActions();
+//   filter(filterOption);
+//   saveFilter(filterOption.value);
+//   return true;
+// };
 
 //  Abriendo el menú de opciones
 const handleActionButton = (e) => {
@@ -146,72 +151,72 @@ const renderTasks = (taskList) => {
 
 // Filtro _____________________________________________________________
 
-const filter = (selected) => {
-  const columnName = getColumn(selected.value);
-  hideColumn();
-  showColumn(columnName);
-  updateMenu(selected);
-  changeSelectName(selected.value);
-};
+// const filter = (selected) => {
+//   const columnName = getColumn(selected.value);
+//   hideColumn();
+//   showColumn(columnName);
+//   updateMenu(selected);
+//   changeSelectName(selected.value);
+// };
 
-const columnIdList = {
-  new: "task-new",
-  scheduled: "task-scheduled",
-  "in-progress": "task-in-progress",
-  done: "task-done",
-};
+// const columnIdList = {
+//   new: "task-new",
+//   scheduled: "task-scheduled",
+//   "in-progress": "task-in-progress",
+//   done: "task-done",
+// };
 
-const getColumn = (selected) => {
-  let columnId = columnIdList[selected];
-  return document.getElementById(columnId).closest("section");
-};
+// const getColumn = (selected) => {
+//   let columnId = columnIdList[selected];
+//   return document.getElementById(columnId).closest("section");
+// };
 
-const columnNameList = {
-  new: " Nuevas",
-  scheduled: " Programadas",
-  "in-progress": " Iniciadas",
-  done: " Finalizadas",
-};
+// const columnNameList = {
+//   new: " Nuevas",
+//   scheduled: " Programadas",
+//   "in-progress": " Iniciadas",
+//   done: " Finalizadas",
+// };
 
-const changeSelectName = (value) => {
-  let name = columnNameList[value];
-  const columnName = document.querySelector(".task-filter__column-name");
-  columnName.innerHTML = name;
-};
+// const changeSelectName = (value) => {
+//   let name = columnNameList[value];
+//   const columnName = document.querySelector(".task-filter__column-name");
+//   columnName.innerHTML = name;
+// };
 
-const hideColumn = () => {
-  const column = document.querySelector(".column-selected");
-  column.classList.add("hidden");
-  column.classList.remove("column-selected");
-};
+// const hideColumn = () => {
+//   const column = document.querySelector(".column-selected");
+//   column.classList.add("hidden");
+//   column.classList.remove("column-selected");
+// };
 
-const showColumn = (column) => {
-  column.classList.add("column-selected");
-  column.classList.remove("hidden");
-};
+// const showColumn = (column) => {
+//   column.classList.add("column-selected");
+//   column.classList.remove("hidden");
+// };
 
-const updateMenu = (selected) => {
-  const option = document.querySelector(".task-filter__option.hidden");
-  option.classList.remove("hidden");
-  selected.classList.add("hidden");
-};
+// const updateMenu = (selected) => {
+//   const option = document.querySelector(".task-filter__option.hidden");
+//   option.classList.remove("hidden");
+//   selected.classList.add("hidden");
+// };
 
-const loadFilter = (filterValue) => {
-  const selected = document.querySelector(`[value=${filterValue}]`);
-  const column = getColumn(selected.value);
-  hideColumn();
-  showColumn(column);
-  updateMenu(selected);
-  changeSelectName(selected.value);
-};
+// const loadFilter = (filterValue) => {
+//   const selected = document.querySelector(`[value=${filterValue}]`);
+//   const column = getColumn(selected.value);
+//   hideColumn();
+//   showColumn(column);
+//   updateMenu(selected);
+//   changeSelectName(selected.value);
+// };
 
 // Acciones _________________________________________________________________________________
 
-const isOpen = (element) => {
+export const isOpen = (element) => {
   return element.classList.contains("open");
 };
 
-const closeAllActions = () => {
+export const closeAllActions = () => {
   const openedMenu = document.querySelectorAll(".open");
   if (openedMenu.length > 0) {
     for (let i = 0; i < openedMenu.length; i++) {
@@ -250,7 +255,7 @@ const updateOptions = (column, optionGroup) => {
 
 // --- LocalStorage-Filtro
 
-const saveFilter = (value) => {
+export const saveFilter = (value) => {
   localStorage.setItem("filter", value);
 };
 
