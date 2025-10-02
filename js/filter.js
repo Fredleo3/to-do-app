@@ -1,4 +1,4 @@
-import { isOpen, closeAllActions } from "./main.js";
+import { isOpen, closeAllActions } from "./utils.js";
 import { saveFilter } from "./storage.js"
 
 
