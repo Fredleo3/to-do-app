@@ -6,8 +6,6 @@ const scheduledTaskList = document.getElementById("task-list-scheduled");
 const inProgressTaskList = document.getElementById("task-list-in-progress");
 const doneTaskList = document.getElementById("task-list-done");
 
-const filterGroup = document.getElementById("task-filter-group");
-
 // Inicio de la aplicación
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -16,61 +14,78 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("click", (e) => {
+  if (handleFilterButton(e)) return;
+  if (handleFilterOption(e)) return;
+  if (handleActionButton(e)) return;
+  if (handleMoveAction(e)) return;
+  closeAllActions();
+});
+
+// Manejadores de eventos ___________________________________________________________
+
+// Abriendo el filtro de tareas en móvil
+const handleFilterButton = (e) => {
   const filterBtn = e.target.closest("#task-filter");
+
+  if (!filterBtn) return false;
+
+  const filterGroup = document.getElementById("task-filter-group");
+  if (isOpen(filterGroup)) {
+    filterGroup.classList.remove("open");
+    filterGroup.classList.add("hidden");
+  } else {
+    closeAllActions();
+    filterGroup.classList.remove("hidden");
+    filterGroup.classList.add("open");
+  }
+  return true;
+};
+
+// Seleccionando una columna
+const handleFilterOption = (e) => {
   const filterOption = e.target.closest(".task-filter__option");
 
+  if (!filterOption) return false;
+
+  closeAllActions();
+  filter(filterOption);
+  saveFilter(filterOption.value);
+  return true;
+};
+
+//  Abriendo el menú de opciones
+const handleActionButton = (e) => {
   const actionBtn = e.target.closest(".task-action");
+
+  if (!actionBtn) return false;
+
+  const column = e.target.closest("section");
+  const task = e.target.closest("li");
+  const optionMenu = task.querySelector(".task-action__group");
+  if (isOpen(optionMenu)) {
+    optionMenu.classList.remove("open");
+    optionMenu.classList.add("hidden");
+  } else {
+    closeAllActions();
+    optionMenu.classList.add("open");
+    optionMenu.classList.remove("hidden");
+    updateOptions(column, optionMenu);
+  }
+  return true;
+};
+
+// clickeando una opción para mover la tarea
+const handleMoveAction = (e) => {
   const moveActions = e.target.closest(".task-action__option");
 
-  // Abriendo el filtro de tareas en móvil
+  if (!moveActions) return false
 
-  if (filterBtn) {
-    if (isOpen(filterGroup)) {
-      filterGroup.classList.remove("open");
-      filterGroup.classList.add("hidden");
-    } else {
-      closeAllActions();
-      filterGroup.classList.remove("hidden");
-      filterGroup.classList.add("open");
-    }
-  }
-  // Seleccionando una columna
-  else if (filterOption) {
-    closeAllActions();
-    filter(filterOption);
-    saveFilter(filterOption.value);
-  }
-  //  Abriendo el menú de opciones
-  else if (actionBtn) {
-    const column = e.target.closest("section");
-    const task = e.target.closest("li");
-    const optionMenu = task.querySelector(".task-action__group");
-    if (isOpen(optionMenu)) {
-      optionMenu.classList.remove("open");
-      optionMenu.classList.add("hidden");
-      return;
-    } else {
-      closeAllActions();
-      optionMenu.classList.add("open");
-      optionMenu.classList.remove("hidden");
-      updateOptions(column, optionMenu);
-      return;
-    }
-  }
-
-  // clickeando una opción para mover la tarea
-  else if (moveActions) {
     closeAllActions();
     const columnTarget = moveActions.value;
     const task = e.target.closest("li");
     moveToCol(columnTarget, task);
-
-    return;
-  } else {
-    closeAllActions();
-    return;
-  }
-});
+    return true
+};
 
 // Nueva tarea ______________________________________________________________________
 
@@ -91,10 +106,10 @@ const idGenerator = () => Date.now();
 // Renderizar tareas ________________________________________________________________
 
 const taskStateList = {
-  "new": newTaskList,
-  "scheduled": scheduledTaskList,
+  new: newTaskList,
+  scheduled: scheduledTaskList,
   "in-progress": inProgressTaskList,
-  "done": doneTaskList
+  done: doneTaskList,
 };
 
 const renderTasks = (taskList) => {
@@ -107,16 +122,16 @@ const renderTasks = (taskList) => {
               <section class="task-action__group hidden">
                 <h5 class="task-action__title">Mover a tareas</h5>
                 <button class="task-action__option" value="new">
-                  Nuevas 1
+                  Nuevas
                 </button>
                 <button class="task-action__option" value="scheduled">
-                  Programadas 2
+                  Programadas
                 </button>
                 <button class="task-action__option" value="in-progress">
-                  Iniciadas 3
+                  Iniciadas
                 </button>
                 <button class="task-action__option" value="done">
-                  Finalizadas 4
+                  Finalizadas
                 </button>
               </section>
 
@@ -140,11 +155,11 @@ const filter = (selected) => {
 };
 
 const columnIdList = {
-  "new": "task-new",
-  "scheduled": "task-scheduled",
+  new: "task-new",
+  scheduled: "task-scheduled",
   "in-progress": "task-in-progress",
-  "done": "task-done"
-}
+  done: "task-done",
+};
 
 const getColumn = (selected) => {
   let columnId = columnIdList[selected];
@@ -152,11 +167,11 @@ const getColumn = (selected) => {
 };
 
 const columnNameList = {
-  "new": " Nuevas",
-  "scheduled": " Programadas",
+  new: " Nuevas",
+  scheduled: " Programadas",
   "in-progress": " Iniciadas",
-  "done": " Finalizadas"
-}
+  done: " Finalizadas",
+};
 
 const changeSelectName = (value) => {
   let name = columnNameList[value];
@@ -207,16 +222,16 @@ const closeAllActions = () => {
 };
 
 const valueColumList = {
-  "new": newTaskList,
-  "scheduled": scheduledTaskList,
+  new: newTaskList,
+  scheduled: scheduledTaskList,
   "in-progress": inProgressTaskList,
-  "done": doneTaskList
-}
+  done: doneTaskList,
+};
 
 const moveToCol = (columnTarget, task) => {
-  valueColumList[columnTarget].appendChild(task) 
+  valueColumList[columnTarget].appendChild(task);
   const taskId = task.dataset.taskId;
-  upadateTask(taskId, "state", columnTarget);
+  updateTask(taskId, "state", columnTarget);
 };
 
 const updateOptions = (column, optionGroup) => {
@@ -255,7 +270,7 @@ const getAllTasks = () => {
   return JSON.parse(localStorage.getItem("allTasks")) || [];
 };
 
-const upadateTask = (id, key, value) => {
+const updateTask = (id, key, value) => {
   let allTasks = getAllTasks();
 
   for (let i = 0; i < allTasks.length; i++) {
