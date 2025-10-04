@@ -1,6 +1,5 @@
-import {  isOpen, closeAllActions } from "./utils.js";
-import { saveTask, updateTask } from "./storage.js"
-
+import { isOpen, closeAllActions } from "./utils.js";
+import { saveTask, updateTask } from "./storage.js";
 
 const inputTask = document.getElementById("task-form-input");
 const form = document.getElementById("task-form");
@@ -38,7 +37,7 @@ const taskStateList = {
 export const renderTasks = (taskList) => {
   taskList.forEach((task) => {
     const taskCode = `
-        <li class="task" data-task-id='${task.taskId}'>
+        <li class="task" data-task-id='${task.taskId}'draggable="true">
               <span class="task-text">
                 ${task.text}</span>              
               <section class="task-action__group hidden">
@@ -127,4 +126,31 @@ const updateOptions = (column, optionGroup) => {
       option.classList.add("hidden");
     }
   });
+};
+
+// Drag and Drop ____________________________________________________________________________
+
+export const initColumnListeners = () => {
+  const columns = document.querySelectorAll(".task-column");
+  
+  columns.forEach((column) => {
+    column.addEventListener("dragover", (e) => {
+      e.preventDefault();
+    });
+
+    column.addEventListener("drop", (e) => {
+      const taskId = e.dataTransfer.getData("text/plain");
+      const draggedTask = document.querySelector(
+        `.task[data-task-id="${taskId}"]`
+      );
+      column.querySelector(".task-list").appendChild(draggedTask);
+    });
+  });
+}
+
+export const handleDrag = (e) => {  
+  const task = e.target.closest("li");
+  if (!task) { return false}
+  e.dataTransfer.setData("text/plain", task.dataset.taskId);
+  return true
 };

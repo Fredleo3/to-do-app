@@ -1,14 +1,17 @@
 import { handleFilterButton, handleFilterOption, loadFilter } from "./filter.js"
-import { handleActionButton, handleMoveAction, renderTasks } from "./tasks.js"
+import { handleActionButton, handleMoveAction, renderTasks, handleDrag, initColumnListeners } from "./tasks.js"
 import { getAllTasks, getFilter } from "./storage.js"
 import { closeAllActions } from "./utils.js"
 
-// Listener global
+
+// Inicialización de la aplicación
 document.addEventListener("DOMContentLoaded", () => {
   renderTasks(getAllTasks());
   loadFilter(getFilter());
+  initColumnListeners();
 });
 
+// Listener global
 document.addEventListener("click", (e) => {
   if (handleFilterButton(e)) return;
   if (handleFilterOption(e)) return;
@@ -16,3 +19,7 @@ document.addEventListener("click", (e) => {
   if (handleMoveAction(e)) return;
   closeAllActions();
 });
+
+document.addEventListener("dragstart", (e) => {
+  if (handleDrag(e)) return;
+})
