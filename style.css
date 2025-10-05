@@ -236,6 +236,10 @@ main{
     margin-bottom: 0;
 }
 
+.task-list {
+    height: 100%;
+}
+
 .task-action__group {
     position: absolute;
     z-index: 50;

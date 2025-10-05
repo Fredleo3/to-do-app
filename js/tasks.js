@@ -130,27 +130,50 @@ const updateOptions = (column, optionGroup) => {
 
 // Drag and Drop ____________________________________________________________________________
 
-export const initColumnListeners = () => {
-  const columns = document.querySelectorAll(".task-column");
-  
-  columns.forEach((column) => {
-    column.addEventListener("dragover", (e) => {
-      e.preventDefault();
-    });
+export const initDragAndDrop = () => {
+  handleDragStart();
+  handleDragInColumns();
+  handleDragEnd();
+};
 
-    column.addEventListener("drop", (e) => {
-      const taskId = e.dataTransfer.getData("text/plain");
-      const draggedTask = document.querySelector(
-        `.task[data-task-id="${taskId}"]`
-      );
-      column.querySelector(".task-list").appendChild(draggedTask);
-    });
+const handleDragStart = () => {
+  document.addEventListener("dragstart", (e) => {
+    const task = e.target.closest("li");
+    if (!task)  return ;
+    setTimeout(() => task.classList.add("dragging"), 0);
   });
-}
+};
 
-export const handleDrag = (e) => {  
-  const task = e.target.closest("li");
-  if (!task) { return false}
-  e.dataTransfer.setData("text/plain", task.dataset.taskId);
-  return true
+const handleDragEnd = () => {
+  document.addEventListener("dragend", (e) => {
+    const task = e.target.closest("li");
+    if (!task) return;
+    task.classList.remove("dragging");
+  });
+};
+
+const handleDragInColumns = () => {
+  const columnContainer = document.querySelector(".task-columns__container");
+
+  columnContainer.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    const list = e.target.closest(".task-list");
+    if (!list) return;
+    initSortableList(e, list);
+  });
+
+  columnContainer.addEventListener("dragenter", (e) => {
+    e.preventDefault();
+  });
+};
+
+const initSortableList = (e, taskList) => {
+  const draggingtask = document.querySelector(".dragging");
+  let siblings = [...taskList.querySelectorAll(".task:not(.dragging)")];
+
+  let nextSibling = siblings.find((sibling) => {
+    return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
+  });
+
+  taskList.insertBefore(draggingtask, nextSibling);
 };
