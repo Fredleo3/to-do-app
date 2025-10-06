@@ -139,8 +139,9 @@ export const initDragAndDrop = () => {
 const handleDragStart = () => {
   document.addEventListener("dragstart", (e) => {
     const task = e.target.closest("li");
-    if (!task)  return ;
+    if (!task) return;
     setTimeout(() => task.classList.add("dragging"), 0);
+    gosthImage(e, task);
   });
 };
 
@@ -170,10 +171,34 @@ const handleDragInColumns = () => {
 const initSortableList = (e, taskList) => {
   const draggingtask = document.querySelector(".dragging");
   let siblings = [...taskList.querySelectorAll(".task:not(.dragging)")];
-
   let nextSibling = siblings.find((sibling) => {
     return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
   });
-
   taskList.insertBefore(draggingtask, nextSibling);
+};
+
+const gosthImage = (e, task) => {
+  const width = task.offsetWidth;
+  const heigth = task.offsetHeight;
+  const clonedImage = task.cloneNode(true);
+
+  clonedImage.classList.add("over");
+  clonedImage.style.minWidth = width + "px";
+  clonedImage.style.maxWidth = width + 10 + "px";
+  clonedImage.style.minHeigth = heigth + "px";
+  clonedImage.style.maxHeigth = heigth + 10 + "px";
+
+  clonedImage.style.position = "absolute";
+  clonedImage.style.bottom = "120vh"; // Muy fuera de la vista
+  clonedImage.style.opacity = "1"; // opacidad total visible
+  clonedImage.style.background = "var(--dragging)";
+  clonedImage.style.boxShadow = "0 0 8px var(--shadow-color)";
+  clonedImage.style.transform = "scale(1.05)"; // pequeño efecto visual
+  clonedImage.style.pointerEvents = "none"; // evitar interferencia
+
+  document.body.appendChild(clonedImage);
+
+  const offsetX = width / 2;
+  e.dataTransfer.setDragImage(clonedImage, offsetX, 10);
+  setTimeout(() => clonedImage.remove(), 0);
 };

@@ -9,8 +9,9 @@
     --background-color-3: #eaf2f9;
     --background-color-4: #f5fbff;
 
-    --shadow-color: rgba(186, 198, 206, .75);
+    --shadow-color: rgba(224, 234, 241, 0.75);
 
+    --dragging: #ffddba;
 
 }
 
@@ -206,7 +207,8 @@ main{
     margin-bottom: 10px;
     border-radius: 6px;
     background-color: var(--background-color-1);
-    box-shadow: 0 0 6px var(--shadow-color);
+    box-shadow: 0 0 6px var(--shadow-color);  
+    cursor: grab;
 }
 
 .task-text {
@@ -296,6 +298,33 @@ main{
     border-radius: 0 0 11px 11px;
 }
 
+.dragging {
+    cursor: grabbing;
+    background-color: transparent;
+    transition: transform 0.4s;
+    border: 3px solid var(--dragging);
+}
+
+.dragging .task-action {
+    background-color: transparent;
+}
+
+.dragging span {
+    color: transparent;
+}
+
+.over .task-action {
+    background-color: var(--dragging);
+    border: none;
+}
+
+.over .task-action span {
+    display: none; 
+}
+
+.tasksSpace {    
+    box-shadow: 0 -5px 2px red; 
+}
 
 /* Resposividad */
 
