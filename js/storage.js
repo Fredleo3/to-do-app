@@ -22,12 +22,13 @@ export const getAllTasks = () => {
   return JSON.parse(localStorage.getItem("allTasks")) || [];
 };
 
-export const updateTask = (id, key, value) => {
+export const updateTask = (id, state, column, position, number) => {
   let allTasks = getAllTasks();
 
   for (let i = 0; i < allTasks.length; i++) {
     if (allTasks[i].taskId === +id) {
-      allTasks[i][key] = value;
+      allTasks[i][state] = column;
+      allTasks[i][position] = number;
     }
   }
   localStorage.setItem("allTasks", JSON.stringify(allTasks));

@@ -17,7 +17,8 @@ form.addEventListener("submit", (e) => {
 });
 
 const newTask = (newText) => {
-  const task = { taskId: idGenerator(), text: newText, state: "new" };
+  const number = getPosition("new") + 1 // Se suma 1 para contar esta tarea que no se ha renderizado
+  const task = { taskId: idGenerator(), text: newText, state: "new", position: number };
   saveTask(task);
   renderTasks([task]);
   inputTask.value = "";
@@ -35,9 +36,14 @@ const taskStateList = {
 };
 
 export const renderTasks = (taskList) => {
+
+  if (taskList.length > 1) {
+    taskList.sort((a, b) => a.position - b.position)
+  }
+  
   taskList.forEach((task) => {
     const taskCode = `
-        <li class="task" data-task-id='${task.taskId}'draggable="true">
+        <li class="task" data-task-id='${task.taskId}' data-position='${task.position}' draggable="true">
               <span class="task-text">
                 ${task.text}</span>              
               <section class="task-action__group hidden">
@@ -104,6 +110,7 @@ export const handleMoveAction = (e) => {
 // Acciones _________________________________________________________________________________
 
 const valueColumList = {
+  // constantes de las columnas
   new: newTaskList,
   scheduled: scheduledTaskList,
   "in-progress": inProgressTaskList,
@@ -113,7 +120,9 @@ const valueColumList = {
 const moveToCol = (columnTarget, task) => {
   valueColumList[columnTarget].appendChild(task);
   const taskId = task.dataset.taskId;
-  updateTask(taskId, "state", columnTarget);
+  const number = getPosition(columnTarget);
+  changePosition(task, number);
+  updateTask(taskId, "state", columnTarget, "position", number);
 };
 
 const updateOptions = (column, optionGroup) => {
@@ -128,7 +137,18 @@ const updateOptions = (column, optionGroup) => {
   });
 };
 
+const getPosition = (columnId) => {
+  return valueColumList[columnId].querySelectorAll(".task").length;
+};
+
+const changePosition = (task, number) => {
+  return (task.dataset.position = number);
+};
+
 // Drag and Drop ____________________________________________________________________________
+
+let idOriginColumn = null;
+let idDestinyColumn = null;
 
 export const initDragAndDrop = () => {
   handleDragStart();
@@ -142,6 +162,8 @@ const handleDragStart = () => {
     if (!task) return;
     setTimeout(() => task.classList.add("dragging"), 0);
     gosthImage(e, task);
+
+    idOriginColumn = e.target.closest(".task-column").id;
   });
 };
 
@@ -150,6 +172,7 @@ const handleDragEnd = () => {
     const task = e.target.closest("li");
     if (!task) return;
     task.classList.remove("dragging");
+    saveTaskOrder(true);
   });
 };
 
@@ -175,6 +198,8 @@ const initSortableList = (e, taskList) => {
     return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
   });
   taskList.insertBefore(draggingtask, nextSibling);
+
+  idDestinyColumn = taskList.closest(".task-column").id;
 };
 
 const gosthImage = (e, task) => {
@@ -189,16 +214,43 @@ const gosthImage = (e, task) => {
   clonedImage.style.maxHeigth = heigth + 10 + "px";
 
   clonedImage.style.position = "absolute";
-  clonedImage.style.bottom = "120vh"; // Muy fuera de la vista
-  clonedImage.style.opacity = "1"; // opacidad total visible
+  clonedImage.style.bottom = "120vh";
+  clonedImage.style.opacity = "1";
   clonedImage.style.background = "var(--dragging)";
   clonedImage.style.boxShadow = "0 0 8px var(--shadow-color)";
-  clonedImage.style.transform = "scale(1.05)"; // pequeño efecto visual
-  clonedImage.style.pointerEvents = "none"; // evitar interferencia
+  clonedImage.style.transform = "scale(1.05)";
+  clonedImage.style.pointerEvents = "none";
 
   document.body.appendChild(clonedImage);
 
   const offsetX = width / 2;
   e.dataTransfer.setDragImage(clonedImage, offsetX, 10);
   setTimeout(() => clonedImage.remove(), 0);
+};
+
+const saveTaskOrder = (finished) => {
+  if (!finished) return;
+
+  const origin = document.querySelector("#" + idOriginColumn);
+  const destiny = document.querySelector("#" + idDestinyColumn);
+
+  const listOrigin = origin.querySelectorAll(".task");
+  const listdestiny = destiny.querySelectorAll(".task");
+
+  let originCount = 1;
+  let destinyCount = 1;
+  
+  listOrigin.forEach((task) => {
+    changePosition(task, originCount);
+    updateTask(task.dataset.taskId, "state", origin.dataset.value, "position", originCount)
+    originCount += 1;
+  });
+
+  if (origin === destiny) return
+
+  listdestiny.forEach((task) => {
+    changePosition(task, originCount);
+    updateTask(task.dataset.taskId, "state", destiny.dataset.value, "position", destinyCount)
+    destinyCount += 1;
+  });
 };
