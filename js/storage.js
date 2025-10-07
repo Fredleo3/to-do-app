@@ -22,14 +22,13 @@ export const getAllTasks = () => {
   return JSON.parse(localStorage.getItem("allTasks")) || [];
 };
 
-export const updateTask = (id, state, column, position, number) => {
-  let allTasks = getAllTasks();
-
-  for (let i = 0; i < allTasks.length; i++) {
-    if (allTasks[i].taskId === +id) {
-      allTasks[i][state] = column;
-      allTasks[i][position] = number;
+export const updateTask = (id, stateKey, stateValue, posKey, posValue) => {
+  const allTasks = getAllTasks().map(task => {
+    if (task.taskId === +id) {
+      return {...task, [stateKey]: stateValue, [posKey]: posValue}
     }
-  }
+    return task
+  });
+
   localStorage.setItem("allTasks", JSON.stringify(allTasks));
 };

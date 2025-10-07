@@ -38,7 +38,7 @@ const taskStateList = {
 export const renderTasks = (taskList) => {
 
   if (taskList.length > 1) {
-    taskList.sort((a, b) => a.position - b.position)
+    taskList.sort((a, b) => +a.position - +b.position)
   }
   
   taskList.forEach((task) => {
@@ -228,29 +228,28 @@ const gosthImage = (e, task) => {
   setTimeout(() => clonedImage.remove(), 0);
 };
 
+
+
 const saveTaskOrder = (finished) => {
   if (!finished) return;
 
-  const origin = document.querySelector("#" + idOriginColumn);
-  const destiny = document.querySelector("#" + idDestinyColumn);
+  const origin = document.querySelector(`#${idOriginColumn}`);
+  const destiny = document.querySelector(`#${idDestinyColumn}`);
 
-  const listOrigin = origin.querySelectorAll(".task");
-  const listdestiny = destiny.querySelectorAll(".task");
+  if (!origin || !destiny) return
 
-  let originCount = 1;
-  let destinyCount = 1;
+  const updateColumnTask = (column, list, columnState) => {
+    list.forEach((task, index) => {
+      const position = index + 1
+      changePosition(task, position)
+      updateTask(task.dataset.taskId, "state", columnState, "position", position)
+    })
+  }
+
+  updateColumnTask(origin, origin.querySelectorAll(".task"), origin.dataset.value)
   
-  listOrigin.forEach((task) => {
-    changePosition(task, originCount);
-    updateTask(task.dataset.taskId, "state", origin.dataset.value, "position", originCount)
-    originCount += 1;
-  });
-
   if (origin === destiny) return
 
-  listdestiny.forEach((task) => {
-    changePosition(task, originCount);
-    updateTask(task.dataset.taskId, "state", destiny.dataset.value, "position", destinyCount)
-    destinyCount += 1;
-  });
+  updateColumnTask(destiny, destiny.querySelectorAll(".task"), destiny.dataset.value)
+  
 };
