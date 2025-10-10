@@ -7,7 +7,12 @@ export const saveFilter = (value) => {
 };
 
 export const getFilter = () => {
-  return localStorage.getItem("filter");
+  let filter =  localStorage.getItem("filter");
+  if (!filter) {
+    filter = "new"
+    saveFilter(filter)
+  }
+  return filter
 };
 
 // --- LocalStorage-Tareas
