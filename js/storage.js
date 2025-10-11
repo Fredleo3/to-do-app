@@ -7,7 +7,7 @@ export const saveFilter = (value) => {
 };
 
 export const getFilter = () => {
-  let filter =  localStorage.getItem("filter");
+  let filter = localStorage.getItem("filter");
   if (!filter) {
     filter = "new"
     saveFilter(filter)

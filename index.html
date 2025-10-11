@@ -19,7 +19,7 @@
     <!-- Iconos -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=keyboard_arrow_down,more_vert&display=block"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,keyboard_arrow_down,more_vert&display=block"
     />
   </head>
   <body>
@@ -43,11 +43,11 @@
         </form>
       </section>
 
-<header>
-  <h2 class="task-filter-title">Tareas</h2>
-</header>
+      <header>
+        <h2 class="task-filter-title">Tareas</h2>
+      </header>
 
-      <section class="task-filter__section">        
+      <section class="task-filter__section">
         <button class="task-filter__select" id="task-filter">
           <h3 class="option-selected">
             Tareas<span class="task-filter__column-name"> Nuevas</span>
@@ -76,19 +76,62 @@
       <section class="task-columns__container">
         <section
           class="task-column task-column--new column-selected"
-          id="task-new" data-value="new"
+          id="task-new"
+          data-value="new"
         >
           <h3 class="task-columns__title">Tareas <span>Nuevas</span></h3>
-          <ul class="task-list task-list-new" id="task-list-new">
-            
-          </ul>
+
+          <ul class="task-list task-list-new" id="task-list-new"></ul>
+
+          <section class="task-form__section">
+            <button class="task-form__opener">
+              <span class="material-symbols-outlined">add</span
+              ><span>Agregar tarea</span>
+            </button>
+
+            <form action="submit" class="task-form">
+              <textarea
+                class="task-form__input"
+                id="task-form-input-new"
+                type="text"
+                placeholder="Tarea nueva"
+                required
+                placeholder="Escribe el título de la tarea"
+              ></textarea>
+              <button class="task-form__submit" type="submit">Agregar</button>
+            </form>
+          </section>
         </section>
 
-        <section class="task-column task-column--scheduled" id="task-scheduled" data-value="scheduled">
+        <section
+          class="task-column task-column--scheduled"
+          id="task-scheduled"
+          data-value="scheduled"
+        >
           <h3 class="task-columns__title">Tareas <span>Programadas</span></h3>
-          <ul class="task-list task-list-scheduled" id="task-list-scheduled">
-            
-          </ul>
+          <ul
+            class="task-list task-list-scheduled"
+            id="task-list-scheduled"
+          ></ul>
+
+          <section class="task-form__section">
+            <button class="task-form__opener">
+              <span class="material-symbols-outlined">add</span
+              ><span>Agregar tarea</span>
+            </button>
+
+            <form action="submit" class="task-form">
+              <textarea
+                class="task-form__input"
+                id="task-form-input-new"
+                type="text"
+                placeholder="Tarea nueva"
+                required
+                placeholder="Escribe el título de la tarea"
+              ></textarea>
+              <button class="task-form__submit" type="submit">Agregar</button>
+            </form>
+          </section>
         </section>
 
         <section
@@ -97,19 +140,61 @@
           data-value="in-progress"
         >
           <h3 class="task-columns__title">Tareas <span>Iniciadas</span></h3>
-          <ul class="task-list task-list-in-progress" id="task-list-in-progress">
-            
-          </ul>
+          <ul
+            class="task-list task-list-in-progress"
+            id="task-list-in-progress"
+          ></ul>
+
+          <section class="task-form__section">
+            <button class="task-form__opener">
+              <span class="material-symbols-outlined">add</span
+              ><span>Agregar tarea</span>
+            </button>
+
+            <form action="submit" class="task-form">
+              <textarea
+                class="task-form__input"
+                id="task-form-input-new"
+                type="text"
+                placeholder="Tarea nueva"
+                required
+                placeholder="Escribe el título de la tarea"
+              ></textarea>
+              <button class="task-form__submit" type="submit">Agregar</button>
+            </form>
+          </section>
         </section>
 
-        <section class="task-column task-column--done" id="task-done" data-value="done"> 
+        <section
+          class="task-column task-column--done"
+          id="task-done"
+          data-value="done"
+        >
           <h3 class="task-columns__title">Tareas <span>Finalizadas</span></h3>
-          <ul class="task-list task-list-done" id="task-list-done">
-            
-          </ul>
+          <ul class="task-list task-list-done" id="task-list-done"></ul>
+
+          <section class="task-form__section">
+            <button class="task-form__opener">
+              <span class="material-symbols-outlined">add</span
+              ><span>Agregar tarea</span>
+            </button>
+
+            <form action="submit" class="task-form">
+              <textarea
+                class="task-form__input"
+                id="task-form-input-new"
+                type="text"
+                placeholder="Tarea nueva"
+                required
+                placeholder="Escribe el título de la tarea"
+              ></textarea>
+              <button class="task-form__submit" type="submit">Agregar</button>
+            </form>
+          </section>
         </section>
       </section>
     </main>
+
     <script type="module" src="js/main.js"></script>
   </body>
 </html>
