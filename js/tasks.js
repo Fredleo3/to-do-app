@@ -1,8 +1,5 @@
-import { isOpen, closeAllActions } from "./utils.js";
+import { isOpen, closeAllActions, open, close } from "./utils.js";
 import { saveTask, updateTask } from "./storage.js";
-
-const inputTask = document.getElementById("task-form-input");
-const form = document.getElementById("task-form");
 
 const newTaskList = document.getElementById("task-list-new");
 const scheduledTaskList = document.getElementById("task-list-scheduled");
@@ -11,14 +8,45 @@ const doneTaskList = document.getElementById("task-list-done");
 
 // Nueva tarea ______________________________________________________________________
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  newTask(inputTask.value.trim());
-});
+export const openFormTask = (e) => {
+  
+  const opener = e.target.closest(".task-form__opener")
+  if (!opener) return false
 
-const newTask = (newText) => {
-  const number = getPosition("new") + 1 // Se suma 1 para contar esta tarea que no se ha renderizado
-  const task = { taskId: idGenerator(), text: newText, state: "new", position: number };
+  closeAllActions();
+
+  const formSection = opener.closest(".task-form__section")
+  const form = formSection.querySelector(".task-form")  
+  if (!form) return false
+
+  if (isOpen(form)) close(form)
+  open(form)
+  close(opener)
+  return true
+}
+
+// Para mantener el formulario abierto
+export const focusInput = (e) => {
+  const form = e.target.closest(".task-form")
+  if (!form) return false
+
+  open(form)  
+  return true
+}
+
+export const addNewTask = (e) => {
+  e.preventDefault();
+  const inputTask = e.target.querySelector(".task-form__input")
+  if (!inputTask) return false
+
+  newTask(inputTask.value.trim(), inputTask);
+  return true
+}
+
+const newTask = (newText, inputTask) => {
+  const column = inputTask.closest(".task-column").dataset.value
+  const number = getPosition(column) + 1 // Se suma 1 para contar esta tarea que no se ha renderizado
+  const task = { taskId: idGenerator(), text: newText, state: column, position: number };
   saveTask(task);
   renderTasks([task]);
   inputTask.value = "";
@@ -83,12 +111,10 @@ export const handleActionButton = (e) => {
   const task = e.target.closest("li");
   const optionMenu = task.querySelector(".task-action__group");
   if (isOpen(optionMenu)) {
-    optionMenu.classList.remove("open");
-    optionMenu.classList.add("hidden");
+    close(optionMenu)
   } else {
     closeAllActions();
-    optionMenu.classList.add("open");
-    optionMenu.classList.remove("hidden");
+    open(optionMenu)
     updateOptions(column, optionMenu);
   }
   return true;

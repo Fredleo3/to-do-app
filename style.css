@@ -46,9 +46,9 @@ main {
 }
 
 .task-form__section {
-    display: flex;
-    flex-direction: column;
-    margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
 }
 
 .task-filter__section {
@@ -131,10 +131,6 @@ main {
   border-radius: 0 0 14px 14px;
   border: 3px solid var(--background-color-2);
   border-top: 0;
-}
-
-.hidden {
-  display: none;
 }
 
 .column-selected {
@@ -240,6 +236,7 @@ main {
   flex-direction: column;
   gap: 8px;
   margin: 14px 0;
+  transition: transform 0.4s;
 }
 
 .task-form__label {
@@ -249,15 +246,15 @@ main {
 }
 
 .task-form__input {
-  padding: 6px 12px;
+  padding: 12px 16px;
   border-radius: 5px;
-  height: 50px;
   border: none;
   box-shadow: 0 0 5px var(--shadow-color);
   color: var(--text-color-2);
   font-weight: 500;
   font-size: 0.9rem;
   hyphens: auto;
+  field-sizing: content;
 }
 
 .task-form__input::placeholder {
@@ -288,6 +285,7 @@ main {
   color: var(--text-color-2);
   gap: 6px;
   margin-bottom: 14px;
+  transition: transform 0.4s;
 
   & span {
     text-align: center;
@@ -300,8 +298,8 @@ main {
 
 /* Interacción */
 
-:is(.task-form__submit, .task-form__opener ):hover {
-    background-color: #5999be;
+:is(.task-form__submit, .task-form__opener):hover {
+  background-color: #5999be;
   color: white;
   cursor: pointer;
 }
@@ -346,6 +344,15 @@ main {
   display: none;
 }
 
+
+
+
+
+.hidden {
+  display: none;
+}
+
+
 /* Resposividad */
 
 @media screen and (min-width: 810px) {
@@ -388,3 +395,4 @@ main {
     display: block;
   }
 }
+
