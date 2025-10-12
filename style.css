@@ -27,6 +27,7 @@
 /* Contenedores */
 
 body {
+  position: relative;
   background-color: var(--body-color);
   display: flex;
   justify-content: center;
@@ -296,10 +297,123 @@ main {
   }
 }
 
+.modal-edit {
+  /* position: fixed;
+  top: 0;
+  left: 0; 
+  width: 100%;
+  min-height: 100%;
+  background-color: rgba(70, 70, 70, 0.85); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-edit::backdrop {
+  background-color: rgba(70, 70, 70, 0.85);
+}
+
+.modal-edit__container {
+  position: relative;
+  background-color: var(--background-color-3);
+  width: min(370px, 90%);
+  height: min(auto, 90vh);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.modal-edit__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 20px 14px 36px;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: var(--background-color-2);
+}
+
+.modal-edit__title {
+  color: var(--text-color-1);
+}
+
+.modal-edit__close {
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: solid 2px var(--text-color-2);
+  color: var(--text-color-2);
+  height: 25px;
+  width: 25px;
+  border-radius: 6px;
+}
+
+.modal-edit__form {
+  display: grid;
+  margin: 0 20px;
+
+  & button {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  & .modal-edit__form--save {
+    background-color: var(--text-color-2);
+    color: white;
+  }
+
+  & .modal-edit__form--cancel {
+    background-color: transparent;
+    color: var(--text-color-1);
+    border: 2px solid var(--text-color-3);
+  }
+}
+
+.modal-edit__form--label {
+  margin: 0 16px;
+  color: var(--text-color-2);
+  font-weight: 500;
+}
+
+.modal-edit__form--text {
+  background-color: transparent;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text-color-1);
+  resize: none;
+  field-sizing: content;
+}
+
+.modal-edit__form--btn--container {
+  display: flex;
+  justify-content: end;
+  margin: 0 12px 20px 12px;
+  gap: 10px;
+}
+
 /* Interacción */
 
-:is(.task-form__submit, .task-form__opener):hover {
+:is(.modal-edit__form--text, .modal-edit__form--label):hover {
+  cursor: pointer;
+}
+
+:is(.task-form__submit, .task-form__opener, .modal-edit__form--save):hover {
   background-color: #5999be;
+  color: white;
+  cursor: pointer;
+}
+
+:is(.modal-edit__form--cancel, .modal-edit__close):hover {
+  background-color: var(--text-color-3);
   color: white;
   cursor: pointer;
 }
@@ -309,6 +423,7 @@ main {
 .task-action__option:hover {
   background-color: var(--text-color-3);
   color: white;
+  cursor: pointer;
 }
 
 :focus {
@@ -344,20 +459,27 @@ main {
   display: none;
 }
 
-
-
-
-
 .hidden {
   display: none;
 }
-
 
 /* Resposividad */
 
 @media screen and (min-width: 810px) {
   body {
     padding: 0 100px;
+  }
+
+  .modal-edit__container {
+    width: max(500px, 60%);
+  }
+
+  .modal-edit__form {
+    margin: 0 40px;
+  }
+
+  .modal-edit__header {
+    padding: 14px 20px 14px 52px;
   }
 }
 
@@ -384,6 +506,10 @@ main {
     border-radius: 14px;
     display: block;
   }
+
+  .modal-edit__container {
+    width: min(700px, 50%);
+  }
 }
 
 @media screen and (min-width: 1920px) {
@@ -395,4 +521,3 @@ main {
     display: block;
   }
 }
-

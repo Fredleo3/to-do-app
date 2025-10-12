@@ -20,7 +20,7 @@
     <!-- Iconos -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,keyboard_arrow_down,more_vert&display=block"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,close,keyboard_arrow_down,more_vert&display=block"
     />
   </head>
   <body>
@@ -29,25 +29,6 @@
         <h1 class="title">To Do App</h1>
         <!-- <h1 class="title">TasKan</h1> -->
       </header>
-      <!-- <section class="task-form__section">
-        <form class="task-form" id="task-form" action="submit">
-          <label class="task-form__label" for="task-form-input"
-            >Ingresa una nueva tarea</label
-          >
-          <textarea
-            class="task-form__input"
-            id="task-form-input"
-            type="text"
-            placeholder="Tarea nueva"
-            required
-          ></textarea>
-          <button type="submit">Agregar</button>
-        </form>
-      </section> -->
-
-      <!-- <header>
-        <h2 class="task-filter-title">Tareas</h2>
-      </header> -->
 
       <section class="task-filter__section">
         <button class="task-filter__select" id="task-filter">
@@ -196,6 +177,32 @@
         </section>
       </section>
     </main>
+
+    <dialog class="modal-edit">
+      <section class="modal-edit__container">
+        <header class="modal-edit__header">
+          <h3 class="modal-edit__title">Editar tarea</h3>
+          <button class="modal-edit__close">
+            <span class="material-symbols-outlined"> close </span>
+          </button>
+        </header>
+        <form class="modal-edit__form">
+          <label class="modal-edit__form--label" for="edit-title">Editar título</label>
+          <textarea autofocus class="modal-edit__form--text" id="edit-title">
+Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, itaque?</textarea
+          >
+
+          <div class="modal-edit__form--btn--container">
+            <button class="modal-edit__form--save" type="submit">
+              Guardar
+            </button>
+            <button class="modal-edit__form--cancel" type="button">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </section>
+    </dialog>
 
     <script type="module" src="js/main.js"></script>
   </body>
