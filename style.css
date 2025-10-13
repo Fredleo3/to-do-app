@@ -298,28 +298,29 @@ main {
 }
 
 .modal-edit {
-  /* position: fixed;
-  top: 0;
-  left: 0; 
-  width: 100%;
-  min-height: 100%;
-  background-color: rgba(70, 70, 70, 0.85); */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border: none;
+  background: none;
+  background-color: var(--background-color-3);
+  width: min(370px, 90%);
+  height: min(auto, 90vh);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: auto;
 }
+
+
 
 .modal-edit::backdrop {
   background-color: rgba(70, 70, 70, 0.85);
 }
 
 .modal-edit__container {
-  position: relative;
   background-color: var(--background-color-3);
   width: min(370px, 90%);
   height: min(auto, 90vh);
   border-radius: 16px;
   overflow: hidden;
+  margin: auto;
 }
 
 .modal-edit__header {
@@ -470,7 +471,7 @@ main {
     padding: 0 100px;
   }
 
-  .modal-edit__container {
+  .modal-edit {
     width: max(500px, 60%);
   }
 
@@ -507,7 +508,7 @@ main {
     display: block;
   }
 
-  .modal-edit__container {
+  .modal-edit {
     width: min(700px, 50%);
   }
 }

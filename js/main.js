@@ -1,5 +1,5 @@
 import { handleFilterButton, handleFilterOption, loadFilter } from "./filter.js"
-import { openFormTask, focusInput, addNewTask, handleActionButton, handleMoveAction, renderTasks, initDragAndDrop } from "./tasks.js"
+import { openFormTask, focusInput, addNewTask, handleActionButton, handleMoveAction, renderTasks, initDragAndDrop, handleEditTask, handleCloseEditTask } from "./tasks.js"
 import { getAllTasks, getFilter } from "./storage.js"
 import { closeAllActions, showOpenerForm } from "./utils.js"
 
@@ -19,6 +19,8 @@ document.addEventListener("click", (e) => {
   if (handleFilterOption(e)) return;
   if (handleActionButton(e)) return;
   if (handleMoveAction(e)) return;
+  if (handleEditTask(e)) return;
+  if (handleCloseEditTask(e)) return;
   closeAllActions();
   showOpenerForm();
 });

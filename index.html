@@ -183,35 +183,32 @@
       role="dialog"
       aria-labelledby="modal-edit-title"
       aria-modal="true"
+      closedby="any"
     >
-      <section class="modal-edit__container">
-        <header class="modal-edit__header">
-          <h3 class="modal-edit__title" id="modal-edit-title">Editar tarea</h3>
-          <button
-            class="modal-edit__close"
-            aria-label="Cerrar ventana de edición"
-          >
-            <span class="material-symbols-outlined"> close </span>
-          </button>
-        </header>
-        <form class="modal-edit__form">
-          <label class="modal-edit__form--label" for="edit-title"
-            >Editar título</label
-          >
-          <textarea readonly class="modal-edit__form--text" id="edit-title">
+      <header class="modal-edit__header">
+        <h3 class="modal-edit__title" id="modal-edit-title">Editar tarea</h3>
+        <button
+          class="modal-edit__close"
+          aria-label="Cerrar ventana de edición"
+        >
+          <span class="material-symbols-outlined"> close </span>
+        </button>
+      </header>
+      <form class="modal-edit__form">
+        <label class="modal-edit__form--label" for="edit-title"
+          >Editar título</label
+        >
+        <textarea readonly class="modal-edit__form--text" id="edit-title">
 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, itaque?</textarea
-          >
+        >
 
-          <div class="modal-edit__form--btn--container">
-            <button class="modal-edit__form--save" type="submit">
-              Guardar
-            </button>
-            <button class="modal-edit__form--cancel" type="button">
-              Cancelar
-            </button>
-          </div>
-        </form>
-      </section>
+        <div class="modal-edit__form--btn--container">
+          <button class="modal-edit__form--save" type="submit">Guardar</button>
+          <button class="modal-edit__form--cancel" type="button">
+            Cancelar
+          </button>
+        </div>
+      </form>
     </dialog>
 
     <script type="module" src="js/main.js"></script>

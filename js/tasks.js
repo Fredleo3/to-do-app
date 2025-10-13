@@ -99,6 +99,26 @@ export const renderTasks = (taskList) => {
   });
 };
 
+
+// Editar tareas ____________________________________________________________________
+
+export const handleEditTask = (e) => {
+  const taskToEdit = e.target.closest("li")
+  if (!taskToEdit) return false
+
+  const dialog = document.querySelector(".modal-edit")
+  dialog.showModal()
+}
+
+export const handleCloseEditTask = (e) => {
+  const closeBtn = e.target.closest(".modal-edit__close")
+  if (!closeBtn) return false;
+
+  const dialog = document.querySelector(".modal-edit")
+  dialog.close()
+}
+
+
 // Manejadores de eventos ___________________________________________________________
 
 //  Abriendo el menú de opciones
