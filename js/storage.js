@@ -27,10 +27,10 @@ export const getAllTasks = () => {
   return JSON.parse(localStorage.getItem("allTasks")) || [];
 };
 
-export const updateTask = (id, stateKey, stateValue, posKey, posValue) => {
+export const updateTask = (id, keyValues) => {
   const allTasks = getAllTasks().map(task => {
     if (task.taskId === +id) {
-      return {...task, [stateKey]: stateValue, [posKey]: posValue}
+      return {...task, ...keyValues}
     }
     return task
   });

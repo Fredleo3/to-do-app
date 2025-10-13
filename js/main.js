@@ -1,8 +1,26 @@
-import { handleFilterButton, handleFilterOption, loadFilter } from "./filter.js"
-import { openFormTask, focusInput, addNewTask, handleActionButton, handleMoveAction, renderTasks, initDragAndDrop, handleEditTask, handleCloseEditTask } from "./tasks.js"
-import { getAllTasks, getFilter } from "./storage.js"
-import { closeAllActions, showOpenerForm } from "./utils.js"
+import {
+  handleFilterButton,
+  handleFilterOption,
+  loadFilter,
+} from "./filter.js";
 
+import {
+  openFormTask,
+  focusInput,
+  addNewTask,
+  handleActionButton,
+  handleMoveAction,
+  renderTasks,
+  initDragAndDrop,
+  handleEditTask,
+  handleCloseEditTask,
+  editTask,
+  saveEditTask,
+  cancelEditTask
+} from "./tasks.js";
+
+import { getAllTasks, getFilter } from "./storage.js";
+import { closeAllActions, showOpenerForm } from "./utils.js";
 
 // Inicialización de la aplicación
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,19 +39,13 @@ document.addEventListener("click", (e) => {
   if (handleMoveAction(e)) return;
   if (handleEditTask(e)) return;
   if (handleCloseEditTask(e)) return;
+  if (editTask(e)) return;
+  if (saveEditTask(e)) return;
+  if (cancelEditTask(e)) return;
   closeAllActions();
   showOpenerForm();
 });
 
 document.addEventListener("submit", (e) => {
-  if (addNewTask (e)) return;
+  if (addNewTask(e)) return;
 });
-
-
-
-
-
-
-
-
-

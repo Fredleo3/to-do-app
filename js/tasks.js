@@ -100,13 +100,17 @@ export const renderTasks = (taskList) => {
 };
 
 
-// Editar tareas ____________________________________________________________________
+// Abrir modal editar tareas ____________________________________________________________________
 
 export const handleEditTask = (e) => {
   const taskToEdit = e.target.closest("li")
   if (!taskToEdit) return false
 
   const dialog = document.querySelector(".modal-edit")
+  const taskText = taskToEdit.querySelector(".task-text").textContent.trim()
+  const inputText = dialog.querySelector(".modal-edit__form--text")
+  inputText.value = taskText
+  dialog.dataset.taskId = taskToEdit.dataset.taskId
   dialog.showModal()
 }
 
@@ -116,6 +120,40 @@ export const handleCloseEditTask = (e) => {
 
   const dialog = document.querySelector(".modal-edit")
   dialog.close()
+}
+
+
+// Editar tareas ____________________________________________________________________
+
+export const editTask = (e) => {
+  const inputText = e.target.closest(".modal-edit__form--text");
+  if (!inputText) return;
+  inputText.removeAttribute('readonly')
+}
+
+export const saveEditTask = (e) => {
+  const saveBtn = e.target.closest(".modal-edit__form--save")
+  if (!saveBtn) return;
+
+  const dialog = saveBtn.closest("dialog")
+  const taskId = dialog.dataset.taskId
+  const modifiedText = dialog.querySelector(".modal-edit__form--text").value
+
+  // Actualizar tarea en la UI
+  const task = document.querySelector(`[data-task-id="${taskId}"]`) 
+  const taskText = task.querySelector(".task-text")
+  taskText.textContent = modifiedText
+
+  // Actualiza localStrorage
+  updateTask(taskId, {"text": modifiedText})
+
+  dialog.querySelector(".modal-edit__form--text").setAttribute("readonly", true)
+
+  
+}
+
+export const cancelEditTask = (e) => {
+
 }
 
 
@@ -168,7 +206,7 @@ const moveToCol = (columnTarget, task) => {
   const taskId = task.dataset.taskId;
   const number = getPosition(columnTarget);
   changePosition(task, number);
-  updateTask(taskId, "state", columnTarget, "position", number);
+  updateTask(taskId, {"state": columnTarget, "position": number});
 };
 
 const updateOptions = (column, optionGroup) => {
@@ -288,7 +326,7 @@ const saveTaskOrder = (finished) => {
     list.forEach((task, index) => {
       const position = index + 1
       changePosition(task, position)
-      updateTask(task.dataset.taskId, "state", columnState, "position", position)
+      updateTask(task.dataset.taskId, {"state": columnState, "position": position})
     })
   }
 
