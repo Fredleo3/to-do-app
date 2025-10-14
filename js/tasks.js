@@ -9,44 +9,48 @@ const doneTaskList = document.getElementById("task-list-done");
 // Nueva tarea ______________________________________________________________________
 
 export const openFormTask = (e) => {
-  
-  const opener = e.target.closest(".task-form__opener")
-  if (!opener) return false
+  const opener = e.target.closest(".task-form__opener");
+  if (!opener) return false;
 
   closeAllActions();
 
-  const formSection = opener.closest(".task-form__section")
-  const form = formSection.querySelector(".task-form")  
-  if (!form) return false
+  const formSection = opener.closest(".task-form__section");
+  const form = formSection.querySelector(".task-form");
+  if (!form) return false;
 
-  if (isOpen(form)) close(form)
-  open(form)
-  close(opener)
-  return true
-}
+  if (isOpen(form)) close(form);
+  open(form);
+  close(opener);
+  return true;
+};
 
 // Para mantener el formulario abierto
 export const focusInput = (e) => {
-  const form = e.target.closest(".task-form")
-  if (!form) return false
+  const form = e.target.closest(".task-form");
+  if (!form) return false;
 
-  open(form)  
-  return true
-}
+  open(form);
+  return true;
+};
 
 export const addNewTask = (e) => {
   e.preventDefault();
-  const inputTask = e.target.querySelector(".task-form__input")
-  if (!inputTask) return false
+  const inputTask = e.target.querySelector(".task-form__input");
+  if (!inputTask) return false;
 
   newTask(inputTask.value.trim(), inputTask);
-  return true
-}
+  return true;
+};
 
 const newTask = (newText, inputTask) => {
-  const column = inputTask.closest(".task-column").dataset.value
-  const number = getPosition(column) + 1 // Se suma 1 para contar esta tarea que no se ha renderizado
-  const task = { taskId: idGenerator(), text: newText, state: column, position: number };
+  const column = inputTask.closest(".task-column").dataset.value;
+  const number = getPosition(column) + 1; // Se suma 1 para contar esta tarea que no se ha renderizado
+  const task = {
+    taskId: idGenerator(),
+    text: newText,
+    state: column,
+    position: number,
+  };
   saveTask(task);
   renderTasks([task]);
   inputTask.value = "";
@@ -64,11 +68,10 @@ const taskStateList = {
 };
 
 export const renderTasks = (taskList) => {
-
   if (taskList.length > 1) {
-    taskList.sort((a, b) => +a.position - +b.position)
+    taskList.sort((a, b) => +a.position - +b.position);
   }
-  
+
   taskList.forEach((task) => {
     const taskCode = `
         <li class="task" data-task-id='${task.taskId}' data-position='${task.position}' draggable="true">
@@ -99,63 +102,96 @@ export const renderTasks = (taskList) => {
   });
 };
 
-
 // Abrir modal editar tareas ____________________________________________________________________
 
 export const handleEditTask = (e) => {
-  const taskToEdit = e.target.closest("li")
-  if (!taskToEdit) return false
+  const taskToEdit = e.target.closest("li");
+  if (!taskToEdit) return false;
 
-  const dialog = document.querySelector(".modal-edit")
-  const taskText = taskToEdit.querySelector(".task-text").textContent.trim()
-  const inputText = dialog.querySelector(".modal-edit__form--text")
-  inputText.value = taskText
-  dialog.dataset.taskId = taskToEdit.dataset.taskId
-  dialog.showModal()
-}
+  const dialog = document.querySelector(".modal-edit");
+  const taskText = taskToEdit.querySelector(".task-text").textContent.trim();
+  const inputText = dialog.querySelector(".modal-edit__form--text");
+  inputText.value = taskText;
+  dialog.dataset.taskId = taskToEdit.dataset.taskId;
+  dialog.showModal();
+};
 
 export const handleCloseEditTask = (e) => {
-  const closeBtn = e.target.closest(".modal-edit__close")
+  const closeBtn = e.target.closest(".modal-edit__close");
   if (!closeBtn) return false;
 
-  const dialog = document.querySelector(".modal-edit")
-  dialog.close()
-}
-
+  const dialog = document.querySelector(".modal-edit");
+  dialog.close();
+};
 
 // Editar tareas ____________________________________________________________________
 
 export const editTask = (e) => {
   const inputText = e.target.closest(".modal-edit__form--text");
-  if (!inputText) return;
-  inputText.removeAttribute('readonly')
-}
+  const editBtn = e.target.closest(".modal-edit__form--edit");
+
+  if (!inputText && !editBtn) return;
+  e.preventDefault();
+  const dialog = e.target.closest(".modal-edit");
+
+  const textArea = inputText || dialog.querySelector(".modal-edit__form--text");
+  const editButton = editBtn || dialog.querySelector(".modal-edit__form--edit");
+
+  removeReadOnly(textArea);
+  inputText.focus();
+
+  showElement(dialog.querySelector(".modal-edit__form--btn--container"));
+  hideElement(editButton);
+};
 
 export const saveEditTask = (e) => {
-  const saveBtn = e.target.closest(".modal-edit__form--save")
+  const saveBtn = e.target.closest(".modal-edit__form--save");
   if (!saveBtn) return;
 
-  const dialog = saveBtn.closest("dialog")
-  const taskId = dialog.dataset.taskId
-  const modifiedText = dialog.querySelector(".modal-edit__form--text").value
+  const dialog = saveBtn.closest("dialog");
+  const taskId = dialog.dataset.taskId;
+  const modifiedText = dialog.querySelector(".modal-edit__form--text").value;
 
   // Actualizar tarea en la UI
-  const task = document.querySelector(`[data-task-id="${taskId}"]`) 
-  const taskText = task.querySelector(".task-text")
-  taskText.textContent = modifiedText
+  const task = document.querySelector(`[data-task-id="${taskId}"]`);
+  const taskText = task.querySelector(".task-text");
+  taskText.textContent = modifiedText;
 
   // Actualiza localStrorage
-  updateTask(taskId, {"text": modifiedText})
+  updateTask(taskId, { text: modifiedText });
 
-  dialog.querySelector(".modal-edit__form--text").setAttribute("readonly", true)
-
-  
-}
+  // Resetear valores por defecto de la UI
+  setReadOnly(dialog.querySelector(".modal-edit__form--text"));
+  hideElement(dialog.querySelector(".modal-edit__form--btn--container"));
+  showElement(dialog.querySelector(".modal-edit__form--edit"));
+};
 
 export const cancelEditTask = (e) => {
+  const cancelBtn = e.target.closest(".modal-edit__form--cancel");
+  if (!cancelBtn) return;
 
-}
+  e.preventDefault();
+  const dialog = e.target.closest(".modal-edit");
 
+  // Resetear texto original
+  const taskId = dialog.dataset.taskId;
+  const task = document.querySelector(`[data-task-id="${taskId}"]`);
+  const originText = task.querySelector(".task-text").textContent;
+  dialog.querySelector(".modal-edit__form--text").value = originText.trim();
+
+  // Resetear valores por defecto de la UI
+  hideElement(dialog.querySelector(".modal-edit__form--btn--container"));
+  showElement(dialog.querySelector(".modal-edit__form--edit"));
+  setReadOnly(dialog.querySelector(".modal-edit__form--text"));
+};
+
+const hideElement = (element) => element.classList.add("hidden");
+
+const showElement = (element) => element.classList.remove("hidden");
+
+const removeReadOnly = (element) => element.removeAttribute("readonly");
+
+const setReadOnly = (element) => element.setAttribute("readonly", true);
 
 // Manejadores de eventos ___________________________________________________________
 
@@ -169,10 +205,10 @@ export const handleActionButton = (e) => {
   const task = e.target.closest("li");
   const optionMenu = task.querySelector(".task-action__group");
   if (isOpen(optionMenu)) {
-    close(optionMenu)
+    close(optionMenu);
   } else {
     closeAllActions();
-    open(optionMenu)
+    open(optionMenu);
     updateOptions(column, optionMenu);
   }
   return true;
@@ -206,7 +242,7 @@ const moveToCol = (columnTarget, task) => {
   const taskId = task.dataset.taskId;
   const number = getPosition(columnTarget);
   changePosition(task, number);
-  updateTask(taskId, {"state": columnTarget, "position": number});
+  updateTask(taskId, { state: columnTarget, position: number });
 };
 
 const updateOptions = (column, optionGroup) => {
@@ -312,28 +348,36 @@ const gosthImage = (e, task) => {
   setTimeout(() => clonedImage.remove(), 0);
 };
 
-
-
 const saveTaskOrder = (finished) => {
   if (!finished) return;
 
   const origin = document.querySelector(`#${idOriginColumn}`);
   const destiny = document.querySelector(`#${idDestinyColumn}`);
 
-  if (!origin || !destiny) return
+  if (!origin || !destiny) return;
 
   const updateColumnTask = (column, list, columnState) => {
     list.forEach((task, index) => {
-      const position = index + 1
-      changePosition(task, position)
-      updateTask(task.dataset.taskId, {"state": columnState, "position": position})
-    })
-  }
+      const position = index + 1;
+      changePosition(task, position);
+      updateTask(task.dataset.taskId, {
+        state: columnState,
+        position: position,
+      });
+    });
+  };
 
-  updateColumnTask(origin, origin.querySelectorAll(".task"), origin.dataset.value)
-  
-  if (origin === destiny) return
+  updateColumnTask(
+    origin,
+    origin.querySelectorAll(".task"),
+    origin.dataset.value
+  );
 
-  updateColumnTask(destiny, destiny.querySelectorAll(".task"), destiny.dataset.value)
-  
+  if (origin === destiny) return;
+
+  updateColumnTask(
+    destiny,
+    destiny.querySelectorAll(".task"),
+    destiny.dataset.value
+  );
 };

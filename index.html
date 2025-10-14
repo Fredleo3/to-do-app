@@ -155,7 +155,7 @@
         >
           <h3 class="task-columns__title">Tareas <span>Finalizadas</span></h3>
           <ul class="task-list task-list-done" id="task-list-done"></ul>
-
+          
           <section class="task-form__section">
             <button class="task-form__opener">
               <span class="material-symbols-outlined">add</span
@@ -190,20 +190,20 @@
         <h3 class="modal-edit__title" id="modal-edit-title">Editar tarea</h3>
         <button
           class="modal-edit__close"
-          aria-label="Cerrar ventana de edición"
-        >
+          aria-label="Cerrar ventana de edición"        >
           <span class="material-symbols-outlined"> close </span>
         </button>
+      
       </header>
       <form class="modal-edit__form">
-        <label class="modal-edit__form--label" for="edit-title"
-          >Editar título</label
+        <button class="modal-edit__form--edit" autofocus
+          >Editar</button
         >
-        <textarea readonly class="modal-edit__form--text" id="edit-title">
+        <textarea required readonly class="modal-edit__form--text" id="edit-title">
 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, itaque?</textarea
         >
 
-        <div class="modal-edit__form--btn--container">
+        <div class="modal-edit__form--btn--container hidden">
           <button class="modal-edit__form--save" type="submit">Guardar</button>
           <button class="modal-edit__form--cancel" type="button">
             Cancelar

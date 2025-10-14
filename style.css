@@ -306,9 +306,8 @@ main {
   border-radius: 16px;
   overflow: hidden;
   margin: auto;
+  padding-bottom: 16px;
 }
-
-
 
 .modal-edit::backdrop {
   background-color: rgba(70, 70, 70, 0.85);
@@ -352,15 +351,16 @@ main {
 
 .modal-edit__form {
   display: grid;
-  margin: 0 20px;
+  margin: 0 20px 20px 20px;
 
-  & button {
+  & button{
     border: none;
-    border-radius: 10px;
-    padding: 12px 16px;
+    border-radius: 6px;
+    padding: 6px 14px;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
+    text-align: center;
   }
 
   & .modal-edit__form--save {
@@ -375,10 +375,11 @@ main {
   }
 }
 
-.modal-edit__form--label {
-  margin: 0 16px;
-  color: var(--text-color-2);
-  font-weight: 500;
+.modal-edit__form--edit {
+  max-width: fit-content;
+  margin: 0 16px;  
+  color: white;  
+  background-color: var(--text-color-3);   
 }
 
 .modal-edit__form--text {
@@ -387,11 +388,15 @@ main {
   padding: 12px 16px;
   border-radius: 10px;
   margin-bottom: 15px;
-  font-size: 1.3rem;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-weight: 400;
   color: var(--text-color-1);
   resize: none;
   field-sizing: content;
+
+  & :focus {
+    cursor: text;
+  }
 }
 
 .modal-edit__form--btn--container {
@@ -403,11 +408,15 @@ main {
 
 /* Interacción */
 
-:is(.modal-edit__form--text, .modal-edit__form--label):hover {
+.modal-edit__form--text:hover {
   cursor: pointer;
 }
 
-:is(.task-form__submit, .task-form__opener, .modal-edit__form--save):hover {
+.modal-edit__form--text:hover:focus {
+  cursor: text;
+}
+
+:is(.task-form__submit, .task-form__opener, .modal-edit__form--save, .modal-edit__form--edit):hover {
   background-color: #5999be;
   color: white;
   cursor: pointer;
