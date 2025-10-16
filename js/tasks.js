@@ -138,7 +138,7 @@ export const editTask = (e) => {
   const editButton = editBtn || dialog.querySelector(".modal-edit__form--edit");
 
   removeReadOnly(textArea);
-  inputText.focus();
+  textArea.focus();
 
   showElement(dialog.querySelector(".modal-edit__form--btn--container"));
   hideElement(editButton);
@@ -155,6 +155,9 @@ export const saveEditTask = (e) => {
   // Actualizar tarea en la UI
   const task = document.querySelector(`[data-task-id="${taskId}"]`);
   const taskText = task.querySelector(".task-text");
+
+  if (!modifiedText.trim()) return // alert("El nombre de la tarea no puede estar vacío") //
+
   taskText.textContent = modifiedText;
 
   // Actualiza localStrorage
