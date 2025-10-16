@@ -1,5 +1,6 @@
 :root {
   --body-color: #2a2f41;
+  --body-color-2: #333b57;
 
   --text-color-1: #2b3e49;
   --text-color-2: #527384;
@@ -27,10 +28,7 @@
 /* Contenedores */
 
 body {
-  position: relative;
-  background-color: var(--body-color);
-  display: flex;
-  justify-content: center;
+  background-color: var(--body-color);  
   padding: 0 20px;
 }
 
@@ -38,7 +36,15 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; 
 }
 
 .task-columns__container {
@@ -74,6 +80,62 @@ main {
   font-weight: 800;
   font-size: 3rem;
   color: var(--text-color-1);
+}
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  min-width: 0; 
+}
+
+.board-header__info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;  
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.board-title,
+.board-description {
+  background-color: transparent;
+  border: none;  
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.board-title,
+.board-title::placeholder {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--background-color-3);
+  min-width: 0; 
+}
+
+.board-description,
+.board-description::placeholder {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #7f9bac;
+  field-sizing: content;
+  resize: none;
+  min-width: 0; 
+}
+
+.board-menu-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 2px;
+  border-left: 2px solid var(--body-color-2);
+  padding: 0 4px;
+  margin-left: 20px;
+  flex-shrink: 0;
+
+  & span {
+    color: var(--background-color-2);
+  }
 }
 
 .task-filter-title {
@@ -353,7 +415,7 @@ main {
   display: grid;
   margin: 0 20px 20px 20px;
 
-  & button{
+  & button {
     border: none;
     border-radius: 6px;
     padding: 6px 14px;
@@ -377,9 +439,9 @@ main {
 
 .modal-edit__form--edit {
   max-width: fit-content;
-  margin: 0 16px;  
-  color: white;  
-  background-color: var(--text-color-3);   
+  margin: 0 16px;
+  color: white;
+  background-color: var(--text-color-3);
 }
 
 .modal-edit__form--text {
@@ -408,6 +470,13 @@ main {
 
 /* Interacción */
 
+:is(.board-title, .board-description):hover {
+  cursor: pointer;
+}
+
+:is(.board-title, .board-description):focus {
+  cursor: text;
+}
 .modal-edit__form--text:hover {
   cursor: pointer;
 }
@@ -416,13 +485,29 @@ main {
   cursor: text;
 }
 
-:is(.task-form__submit, .task-form__opener, .modal-edit__form--save, .modal-edit__form--edit):hover {
+.board-menu-btn:hover {
+  background-color: var(--body-color-2);
+  color: white;
+  border: none;
+  cursor: pointer;
+  & span {
+    scale: 1.05;
+  }
+}
+
+:is(
+    .task-form__submit,
+    .task-form__opener,
+    .modal-edit__form--save,
+    .modal-edit__form--edit
+  ):hover {
   background-color: #5999be;
   color: white;
   cursor: pointer;
 }
 
-:is(.modal-edit__form--cancel, .modal-edit__close):hover {
+:is(.modal-edit__form--cancel, 
+.modal-edit__close):hover {
   background-color: var(--text-color-3);
   color: white;
   cursor: pointer;
@@ -531,3 +616,7 @@ main {
     display: block;
   }
 }
+
+/* Comprobación de tama;o de cajas delimitandolas con línea roja */
+
+/* * { outline: 1px solid rgba(255,0,0,0.15); } */
