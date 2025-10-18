@@ -28,3 +28,6 @@ export const closeAllActions = () => {
     }
   }
 };
+
+export const actualDate = () => new Date().toISOString();
+export const idGenerator = () => crypto.randomUUID();

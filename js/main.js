@@ -19,12 +19,14 @@ import {
   cancelEditTask
 } from "./tasks.js";
 
-import { getAllTasks, getFilter } from "./storage.js";
+import {  getFilter, initData } from "./storage.js"; //getAllTasks,
 import { closeAllActions, showOpenerForm } from "./utils.js";
 
 // Inicialización de la aplicación
 document.addEventListener("DOMContentLoaded", () => {
-  renderTasks(getAllTasks());
+  
+  initData();
+  // renderTasks(getAllTasks());
   loadFilter(getFilter());
   initDragAndDrop();
 });

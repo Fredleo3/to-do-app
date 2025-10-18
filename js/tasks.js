@@ -1,5 +1,5 @@
 import { isOpen, closeAllActions, open, close } from "./utils.js";
-import { saveTask, updateTask } from "./storage.js";
+import { } from "./storage.js";
 
 const newTaskList = document.getElementById("task-list-new");
 const scheduledTaskList = document.getElementById("task-list-scheduled");
