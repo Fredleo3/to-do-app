@@ -60,21 +60,20 @@ const idGenerator = () => Date.now();
 
 // Renderizar tareas ________________________________________________________________
 
-const taskStateList = {
-  new: newTaskList,
-  scheduled: scheduledTaskList,
-  "in-progress": inProgressTaskList,
-  done: doneTaskList,
-};
-
-export const renderTasks = (taskList) => {
-  if (taskList.length > 1) {
-    taskList.sort((a, b) => +a.position - +b.position);
+export const renderTasks = (board) => {
+  const allTasks = board.tasks
+  if (allTasks.length > 1) {
+    allTasks.sort((a, b) => +a.position - +b.position);
   }
 
-  taskList.forEach((task) => {
+  allTasks.forEach((task) => {
+    console.log(task.columnId)
+    const column = document.querySelector(`[data-column-id="${task.columnId}"]`)
+    const taskList = column.querySelector(".task-list")
+    console.log(taskList)
+    
     const taskCode = `
-        <li class="task" data-task-id='${task.taskId}' data-position='${task.position}' draggable="true">
+        <li class="task" data-task-id='${task.id}' data-position='${task.position}' draggable="true">
               <span class="task-text">
                 ${task.text}</span>              
               <section class="task-action__group hidden">
@@ -98,7 +97,7 @@ export const renderTasks = (taskList) => {
               </button>              
             </li>
         `;
-    taskStateList[task.state].insertAdjacentHTML("beforeend", taskCode);
+    taskList.insertAdjacentHTML("beforeend", taskCode);
   });
 };
 

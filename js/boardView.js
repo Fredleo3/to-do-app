@@ -1,3 +1,5 @@
+import { renderTasks } from "./tasksView.js"
+
 export const renderBoard = (data, boardId) => {
   
   const board = data.boards.find(board => board.id === boardId) 
@@ -9,10 +11,10 @@ export const renderBoard = (data, boardId) => {
 const renderColumns = (data, board) => {
   const columnsContainer = document.querySelector(".task-columns__container");
   
-  board.columns.map(column => 
+  board.columns.map(column =>
     columnsContainer?.insertAdjacentHTML("beforeend", columnTenplate(column.id, column.columnName))
-  
-  );  
+   ); 
+  renderTasks(board) 
 };
 
 const columnTenplate = (columnId, columnName, selected = "") => {
@@ -23,7 +25,9 @@ const columnTenplate = (columnId, columnName, selected = "") => {
         >
           <h3 class="task-columns__title">${columnName}</h3>
 
-          <ul class="task-list"></ul>
+          <ul class="task-list">
+          
+          </ul>
 
           <section class="task-form__section">
             <button class="task-form__opener">
