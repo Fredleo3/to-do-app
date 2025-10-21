@@ -1,5 +1,5 @@
 import { isOpen, closeAllActions, open, close } from "./utils.js";
-import { saveNewData, taskTemplate } from "./storage.js";
+import { saveNewData, taskTemplate, updateData } from "./storage.js";
 
 const newTaskList = document.getElementById("task-list-new");
 const scheduledTaskList = document.getElementById("task-list-scheduled");
@@ -144,14 +144,16 @@ export const saveEditTask = (e) => {
 
   // Actualizar tarea en la UI
   const task = document.querySelector(`[data-task-id="${taskId}"]`);
-  const taskText = task.querySelector(".task-text");
+  const taskText = task.querySelector(".task-text");  
 
   if (!modifiedText.trim()) return // alert("El nombre de la tarea no puede estar vacío") //
 
   taskText.textContent = modifiedText;
 
+  const newData = {text: modifiedText}
+
   // Actualiza localStrorage
-  updateTask(taskId, { text: modifiedText });
+  updateData("559954e3-59a0-40ea-9979-e30ee5dff274", "tasks", taskId, newData);
 
   // Resetear valores por defecto de la UI
   setReadOnly(dialog.querySelector(".modal-edit__form--text"));
