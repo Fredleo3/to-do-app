@@ -4,7 +4,10 @@ import {
   loadFilter,
 } from "./filter.js";
 
+import { renderBoard } from "./boardView.js"
+
 import {
+  // render,
   openFormTask,
   focusInput,
   addNewTask,
@@ -17,17 +20,19 @@ import {
   editTask,
   saveEditTask,
   cancelEditTask
-} from "./tasks.js";
+} from "./tasksView.js";
 
-import {  getFilter, initData } from "./storage.js"; //getAllTasks,
+import { getFilter, initData, getData } from "./storage.js"; //getAllTasks,
 import { closeAllActions, showOpenerForm } from "./utils.js";
 
 // Inicialización de la aplicación
 document.addEventListener("DOMContentLoaded", () => {
   
   initData();
-  // renderTasks(getAllTasks());
-  loadFilter(getFilter());
+  renderBoard(getData(), "559954e3-59a0-40ea-9979-e30ee5dff274");
+  // renderTasks(getData());
+  // render(getData())
+  // loadFilter(getFilter());
   initDragAndDrop();
 });
 
