@@ -8,7 +8,7 @@ export const getData = () => {
   return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { boards: [] };
 };
 
-const saveAData = (allData) => {
+const saveData = (allData) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
 };
 
@@ -70,7 +70,7 @@ const boardTemplate = () => {
   };
 };
 
-export const newTask = (title, columnId, position) => {
+export const taskTemplate = (title, columnId, position) => {
   return {
     id: idGenerator(),
     text: title,
@@ -89,7 +89,7 @@ export const newTask = (title, columnId, position) => {
   };
 };
 
-export const initializeStorage = () => saveAData({ boards: [boardTemplate()] });
+export const initializeStorage = () => saveData({ boards: [boardTemplate()] });
 
 // ---------------------
 
@@ -105,7 +105,7 @@ export const newBoard = () => {
 
   allBoards.boards.push(boardTemplate());
   console.log(allBoards);
-  saveAData(allBoards);
+  saveData(allBoards);
 };
 
 export const updateBoard = (boardId, boardData) => {
@@ -115,7 +115,7 @@ export const updateBoard = (boardId, boardData) => {
 
   allData.boards[boardIndex] = { ...allData.boards[boardIndex], ...boardData };
   console.log(allData);
-  saveAData(allData);
+  saveData(allData);
 };
 
 // newBoard()
@@ -128,7 +128,7 @@ export const saveNewData = (boardId, keyData, newData) => {
   const board = allData.boards.find((board) => board.id === boardId);
   if (!board || !Array.isArray(board[keyData])) return;
   board[keyData].push(newData);
-  saveAData(allData);
+  saveData(allData);
 };
 
 export const updateData = (boardId, keyData, idData, newData) => {
@@ -145,7 +145,7 @@ export const updateData = (boardId, keyData, idData, newData) => {
     ...newData,
   };
 
-  saveAData(allData);
+  saveData(allData);
 };
 
 // saveNewInfo ( "4653214f-fa5f-44a6-8af4-2b7e634745e2", "tasks", {id: 1760323919811, text: "Nueva tarea 1", state: "new", position: 1} )

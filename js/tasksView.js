@@ -1,5 +1,5 @@
 import { isOpen, closeAllActions, open, close } from "./utils.js";
-import { } from "./storage.js";
+import { saveNewData, taskTemplate } from "./storage.js";
 
 const newTaskList = document.getElementById("task-list-new");
 const scheduledTaskList = document.getElementById("task-list-scheduled");
@@ -43,35 +43,26 @@ export const addNewTask = (e) => {
 };
 
 const newTask = (newText, inputTask) => {
-  const column = inputTask.closest(".task-column").dataset.value;
-  const number = getPosition(column) + 1; // Se suma 1 para contar esta tarea que no se ha renderizado
-  const task = {
-    taskId: idGenerator(),
-    text: newText,
-    state: column,
-    position: number,
-  };
-  saveTask(task);
+  const column = inputTask.closest(".task-column");
+  const position = getPosition(column) + 1; // Se suma 1 para contar esta tarea que no se ha renderizado
+  const task = taskTemplate(newText, column.dataset.columnId, position)
+  
+  saveNewData("559954e3-59a0-40ea-9979-e30ee5dff274", "tasks", task);
   renderTasks([task]);
   inputTask.value = "";
 };
 
-const idGenerator = () => Date.now();
-
 // Renderizar tareas ________________________________________________________________
 
-export const renderTasks = (board) => {
-  const allTasks = board.tasks
+export const renderTasks = (allTasks) => {
   if (allTasks.length > 1) {
     allTasks.sort((a, b) => +a.position - +b.position);
   }
 
   allTasks.forEach((task) => {
-    console.log(task.columnId)
     const column = document.querySelector(`[data-column-id="${task.columnId}"]`)
     const taskList = column.querySelector(".task-list")
-    console.log(taskList)
-    
+        
     const taskCode = `
         <li class="task" data-task-id='${task.id}' data-position='${task.position}' draggable="true">
               <span class="task-text">
@@ -259,8 +250,8 @@ const updateOptions = (column, optionGroup) => {
   });
 };
 
-const getPosition = (columnId) => {
-  return valueColumList[columnId].querySelectorAll(".task").length;
+const getPosition = (column) => {
+  return column.querySelectorAll(".task").length;
 };
 
 const changePosition = (task, number) => {

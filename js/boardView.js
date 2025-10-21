@@ -14,7 +14,7 @@ const renderColumns = (data, board) => {
   board.columns.map(column =>
     columnsContainer?.insertAdjacentHTML("beforeend", columnTenplate(column.id, column.columnName))
    ); 
-  renderTasks(board) 
+  renderTasks(board.tasks) 
 };
 
 const columnTenplate = (columnId, columnName, selected = "") => {
