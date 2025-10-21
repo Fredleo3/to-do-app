@@ -4,7 +4,7 @@ import { actualDate, idGenerator } from "./utils.js";
 
 const STORAGE_KEY = "boardsData";
 
-const getData = () => {
+export const getData = () => {
   return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { boards: [] };
 };
 
