@@ -1,11 +1,6 @@
 import { isOpen, closeAllActions, open, close } from "./utils.js";
 import { getData, saveNewData, taskTemplate, updateData } from "./storage.js";
 
-const newTaskList = document.getElementById("task-list-new");
-const scheduledTaskList = document.getElementById("task-list-scheduled");
-const inProgressTaskList = document.getElementById("task-list-in-progress");
-const doneTaskList = document.getElementById("task-list-done");
-
 // Nueva tarea ______________________________________________________________________
 
 export const openFormTask = (e) => {
@@ -84,8 +79,6 @@ export const renderTasks = (allTasks) => {
   });
 };
 
-
-
 const getMenuOptions = (actualColumn) => {
   // const boardID = document.querySelector()
   const columns = getData().boards.find(
@@ -97,7 +90,11 @@ const getMenuOptions = (actualColumn) => {
   let buttons = ``;
   columns.forEach((column) => {
     if (column.id !== actualColumn) {
-      buttons += `<button class="task-action__option" data-value-id='${column.id}'>
+      buttons += `<button class="task-action__option" value='${column.id}'>
+                  ${column.columnName}
+                </button>`;
+    } else {
+      buttons += `<button class="task-action__option hidden" value='${column.id}'>
                   ${column.columnName}
                 </button>`;
     }
@@ -230,7 +227,7 @@ export const handleMoveAction = (e) => {
 
   closeAllActions();
   const boardId = "559954e3-59a0-40ea-9979-e30ee5dff274" // docuement.querySelector(".bord").dataset.boardId
-  const columnTarget = moveActions.dataset.valueId; // Editado hasta aquí
+  const columnTarget = moveActions.value; 
   const task = e.target.closest("li");
   moveToCol(boardId, columnTarget, task);
   return true;
@@ -252,15 +249,13 @@ const updateOptions = (column, optionGroup) => {
   const allOptions = optionGroup.querySelectorAll(".task-action__option");
 
   allOptions.forEach((option) => {
-    if (option.value != column.dataset.value) {
+    if (option.value != column.dataset.columnId) {
       option.classList.remove("hidden");
     } else {
       option.classList.add("hidden");
     }
   });
 };
-
-// TODO Actualizar los botones de opciones después de mover la tarea de columna
 
 const getPosition = (column) => {
   return column.querySelectorAll(".task").length;
@@ -288,7 +283,7 @@ const handleDragStart = () => {
     setTimeout(() => task.classList.add("dragging"), 0);
     gosthImage(e, task);
 
-    idOriginColumn = e.target.closest(".task-column").id;
+    idOriginColumn = e.target.closest(".task-column").dataset.columnId;
   });
 };
 
@@ -324,7 +319,7 @@ const initSortableList = (e, taskList) => {
   });
   taskList.insertBefore(draggingtask, nextSibling);
 
-  idDestinyColumn = taskList.closest(".task-column").id;
+  idDestinyColumn = taskList.closest(".task-column").dataset.columnId;
 };
 
 const gosthImage = (e, task) => {
@@ -356,33 +351,33 @@ const gosthImage = (e, task) => {
 const saveTaskOrder = (finished) => {
   if (!finished) return;
 
-  const origin = document.querySelector(`#${idOriginColumn}`); // Los id = # de las columnas los eliminé al cargar dianmicamente
-  const destiny = document.querySelector(`#${idDestinyColumn}`);
+  const origin = document.querySelector(`[data-column-id="${idOriginColumn}"]`); 
+  const destiny = document.querySelector(`[data-column-id="${idDestinyColumn}"]`);
 
   if (!origin || !destiny) return;
 
-  const updateColumnTask = (column, list, columnState) => {
+  const updateColumnTask = (list, columnState) => {
     list.forEach((task, index) => {
       const position = index + 1;
       changePosition(task, position);
-      updateTask(task.dataset.taskId, {
-        state: columnState,
+      updateData(
+        "559954e3-59a0-40ea-9979-e30ee5dff274", 
+        "tasks", task.dataset.taskId, {
+        columnId: columnState,
         position: position,
       });
     });
   };
 
   updateColumnTask(
-    origin,
     origin.querySelectorAll(".task"),
-    origin.dataset.value
+    origin.dataset.columnId
   );
 
   if (origin === destiny) return;
 
   updateColumnTask(
-    destiny,
     destiny.querySelectorAll(".task"),
-    destiny.dataset.value
+    destiny.dataset.columnId
   );
 };
