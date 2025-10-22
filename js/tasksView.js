@@ -1,5 +1,5 @@
 import { isOpen, closeAllActions, open, close } from "./utils.js";
-import { saveNewData, taskTemplate, updateData } from "./storage.js";
+import { getData, saveNewData, taskTemplate, updateData } from "./storage.js";
 
 const newTaskList = document.getElementById("task-list-new");
 const scheduledTaskList = document.getElementById("task-list-scheduled");
@@ -45,8 +45,8 @@ export const addNewTask = (e) => {
 const newTask = (newText, inputTask) => {
   const column = inputTask.closest(".task-column");
   const position = getPosition(column) + 1; // Se suma 1 para contar esta tarea que no se ha renderizado
-  const task = taskTemplate(newText, column.dataset.columnId, position)
-  
+  const task = taskTemplate(newText, column.dataset.columnId, position);
+
   saveNewData("559954e3-59a0-40ea-9979-e30ee5dff274", "tasks", task);
   renderTasks([task]);
   inputTask.value = "";
@@ -60,27 +60,19 @@ export const renderTasks = (allTasks) => {
   }
 
   allTasks.forEach((task) => {
-    const column = document.querySelector(`[data-column-id="${task.columnId}"]`)
-    const taskList = column.querySelector(".task-list")
-        
+    const column = document.querySelector(
+      `[data-column-id="${task.columnId}"]`
+    );
+    const taskList = column.querySelector(".task-list");
     const taskCode = `
-        <li class="task" data-task-id='${task.id}' data-position='${task.position}' draggable="true">
+        <li class="task" data-task-id='${task.id}' data-position='${
+      task.position
+    }' draggable="true">
               <span class="task-text">
                 ${task.text}</span>              
               <section class="task-action__group hidden">
-                <h5 class="task-action__title">Mover a tareas</h5>
-                <button class="task-action__option" value="new">
-                  Nuevas
-                </button>
-                <button class="task-action__option" value="scheduled">
-                  Programadas
-                </button>
-                <button class="task-action__option" value="in-progress">
-                  Iniciadas
-                </button>
-                <button class="task-action__option" value="done">
-                  Finalizadas
-                </button>
+                <h5 class="task-action__title">Mover a</h5>
+                ${getMenuOptions(task.columnId)}
               </section>
 
               <button class="task-action">
@@ -90,6 +82,27 @@ export const renderTasks = (allTasks) => {
         `;
     taskList.insertAdjacentHTML("beforeend", taskCode);
   });
+};
+
+// TODO Que no aparezca la opción correspondiente a la columna actual
+
+const getMenuOptions = (actualColumn) => {
+  // const boardID = document.querySelector()
+  const columns = getData().boards.find(
+    (board) => board.id === "559954e3-59a0-40ea-9979-e30ee5dff274"
+  ).columns;
+
+  if (!columns) return;
+
+  let buttons = ``;
+  columns.forEach((column) => {
+    if (column.id !== actualColumn) {
+      buttons += `<button class="task-action__option" data-value-id='${column.id}'>
+                  ${column.columnName}
+                </button>`;
+    }
+  });
+  return buttons;
 };
 
 // Abrir modal editar tareas ____________________________________________________________________
@@ -144,13 +157,13 @@ export const saveEditTask = (e) => {
 
   // Actualizar tarea en la UI
   const task = document.querySelector(`[data-task-id="${taskId}"]`);
-  const taskText = task.querySelector(".task-text");  
+  const taskText = task.querySelector(".task-text");
 
-  if (!modifiedText.trim()) return // alert("El nombre de la tarea no puede estar vacío") //
+  if (!modifiedText.trim()) return; // alert("El nombre de la tarea no puede estar vacío") //
 
   taskText.textContent = modifiedText;
 
-  const newData = {text: modifiedText}
+  const newData = { text: modifiedText };
 
   // Actualiza localStrorage
   updateData("559954e3-59a0-40ea-9979-e30ee5dff274", "tasks", taskId, newData);
