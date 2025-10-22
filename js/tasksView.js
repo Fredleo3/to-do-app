@@ -84,7 +84,7 @@ export const renderTasks = (allTasks) => {
   });
 };
 
-// TODO Que no aparezca la opción correspondiente a la columna actual
+
 
 const getMenuOptions = (actualColumn) => {
   // const boardID = document.querySelector()
@@ -225,32 +225,27 @@ export const handleActionButton = (e) => {
 // clickeando una opción para mover la tarea
 export const handleMoveAction = (e) => {
   const moveActions = e.target.closest(".task-action__option");
-
+  
   if (!moveActions) return false;
 
   closeAllActions();
-  const columnTarget = moveActions.value;
+  const boardId = "559954e3-59a0-40ea-9979-e30ee5dff274" // docuement.querySelector(".bord").dataset.boardId
+  const columnTarget = moveActions.dataset.valueId; // Editado hasta aquí
   const task = e.target.closest("li");
-  moveToCol(columnTarget, task);
+  moveToCol(boardId, columnTarget, task);
   return true;
 };
 
 // Acciones _________________________________________________________________________________
 
-const valueColumList = {
-  // constantes de las columnas
-  new: newTaskList,
-  scheduled: scheduledTaskList,
-  "in-progress": inProgressTaskList,
-  done: doneTaskList,
-};
-
-const moveToCol = (columnTarget, task) => {
-  valueColumList[columnTarget].appendChild(task);
+const moveToCol = (boardId, idColumnTarget, task) => {  
+  const column = document.querySelector(`[data-column-id="${idColumnTarget}"]`)
+  const taskContainer = column.querySelector(".task-list")
+  taskContainer.appendChild(task);
   const taskId = task.dataset.taskId;
-  const number = getPosition(columnTarget);
+  const number = getPosition(taskContainer);
   changePosition(task, number);
-  updateTask(taskId, { state: columnTarget, position: number });
+  updateData(boardId, "tasks", taskId, { columnId: idColumnTarget, position: number });
 };
 
 const updateOptions = (column, optionGroup) => {
@@ -264,6 +259,8 @@ const updateOptions = (column, optionGroup) => {
     }
   });
 };
+
+// TODO Actualizar los botones de opciones después de mover la tarea de columna
 
 const getPosition = (column) => {
   return column.querySelectorAll(".task").length;
