@@ -1,8 +1,8 @@
 import {
   handleFilterButton,
   handleFilterOption,
-  loadFilter,
-} from "./filter.js";
+  
+} from "./filter.js"; //loadFilter,
 
 import { renderBoard } from "./boardView.js"
 
@@ -29,10 +29,10 @@ import { closeAllActions, showOpenerForm } from "./utils.js";
 document.addEventListener("DOMContentLoaded", () => {
   
   initData();
-  renderBoard(getData(), "559954e3-59a0-40ea-9979-e30ee5dff274");
+  renderBoard(getData(), "525350dd-2141-4ab3-9c6e-0f6331ee6de5");
   // renderTasks(getData());
   // render(getData())
-  // loadFilter(getFilter());
+  // loadFilter(getFilter("525350dd-2141-4ab3-9c6e-0f6331ee6de5"));
   initDragAndDrop();
 });
 

@@ -1,8 +1,9 @@
-import { renderTasks } from "./tasksView.js"
+import { renderTasks } from "./tasksView.js";
+import { getFilter } from "./storage.js"
+import { changeSelectName } from "./filter.js"
 
 export const renderBoard = (data, boardId) => {
-  
-  const board = data.boards.find(board => board.id === boardId) 
+  const board = data.boards.find((board) => board.id === boardId);
   if (board === -1) return;
   // TODO Lógica para renderizar el tablero
   renderColumns(data, board);
@@ -10,14 +11,25 @@ export const renderBoard = (data, boardId) => {
 
 const renderColumns = (data, board) => {
   const columnsContainer = document.querySelector(".task-columns__container");
+  const filterMenu = document.querySelector(".task-filter__group")
+  const filter = getFilter("525350dd-2141-4ab3-9c6e-0f6331ee6de5")
   
-  board.columns.map(column =>
-    columnsContainer?.insertAdjacentHTML("beforeend", columnTenplate(column.id, column.columnName))
-   ); 
-  renderTasks(board.tasks) 
+  board.columns.map((column) => {
+    columnsContainer?.insertAdjacentHTML("beforeend", columnTemplate(column.id, column.columnName, filter))  
+    filterMenu?.insertAdjacentHTML("beforeend", columnFilterTemplate(column.id, column.columnName, filter))
+    }
+  );
+  renderTasks(board.tasks);
 };
 
-const columnTenplate = (columnId, columnName, selected = "") => {
+const columnTemplate = (columnId, columnName, filter) => {
+
+  let selected = "";
+  if (filter === columnId ) {
+    selected =  "column-selected"
+    changeSelectName(columnName)
+  } else {selected = "hidden"} 
+
   return `
     <section
           class="task-column ${selected}"
@@ -47,6 +59,16 @@ const columnTenplate = (columnId, columnName, selected = "") => {
             </form>
           </section>
         </section>
+  `;
+};
+
+const columnFilterTemplate = (columnId, columnName, filter) => {
+let active = ""
+columnId === filter ? active = "hidden" : active = ""
+  return `
+          <button class="task-filter__option ${active}" value=${columnId}>
+            ${columnName}
+          </button>
   `;
 };
 

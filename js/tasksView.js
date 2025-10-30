@@ -42,7 +42,7 @@ const newTask = (newText, inputTask) => {
   const position = getPosition(column) + 1; // Se suma 1 para contar esta tarea que no se ha renderizado
   const task = taskTemplate(newText, column.dataset.columnId, position);
 
-  saveNewData("559954e3-59a0-40ea-9979-e30ee5dff274", "tasks", task);
+  saveNewData("525350dd-2141-4ab3-9c6e-0f6331ee6de5", "tasks", task);
   renderTasks([task]);
   inputTask.value = "";
 };
@@ -82,7 +82,7 @@ export const renderTasks = (allTasks) => {
 const getMenuOptions = (actualColumn) => {
   // const boardID = document.querySelector()
   const columns = getData().boards.find(
-    (board) => board.id === "559954e3-59a0-40ea-9979-e30ee5dff274"
+    (board) => board.id === "525350dd-2141-4ab3-9c6e-0f6331ee6de5"
   ).columns;
 
   if (!columns) return;
@@ -361,7 +361,7 @@ const saveTaskOrder = (finished) => {
       const position = index + 1;
       changePosition(task, position);
       updateData(
-        "559954e3-59a0-40ea-9979-e30ee5dff274", 
+        "525350dd-2141-4ab3-9c6e-0f6331ee6de5", 
         "tasks", task.dataset.taskId, {
         columnId: columnState,
         position: position,

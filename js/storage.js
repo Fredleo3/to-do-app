@@ -14,13 +14,18 @@ const saveData = (allData) => {
 
 // --- LocalStorage-Filtro
 
-export const saveFilter = (value) => localStorage.setItem("filter", value);
+// export const saveFilter = (value) => localStorage.setItem("filter", value);
 
-export const getFilter = () => {
-  let filter = localStorage.getItem("filter");
+// boardId, keyData, newData
+
+export const getFilter = (boardId) => {
+  const data = getData();
+  const board = data.boards.find(board => board.id === boardId);
+  
+  let filter = board.columnFilter
   if (!filter) {
-    filter = "new";
-    saveFilter(filter);
+    filter = board.columns[0].id;
+    saveFilter(boardId, filter)
   }
   return filter;
 };
@@ -66,6 +71,7 @@ const boardTemplate = () => {
     labels: [],
     active: true,
     favorite: false,
+    columnFilter: null,
     history: [],
   };
 };
@@ -122,12 +128,21 @@ export const updateBoard = (boardId, boardData) => {
 
 // updateBoard("70e63738-1ac4-489f-a624-60d746ce057c", {boardName: "Trabajos"})
 
+export const saveFilter = (boardId, filter) => {
+  const allData = getData();
+  const boardIndex = allData.boards.findIndex((board) => board.id === boardId);
+  allData.boards[boardIndex].columnFilter = filter
+  saveData(allData)
+} 
+
 // Para guardar columnas, tareas y etiquetas
 export const saveNewData = (boardId, keyData, newData) => {
   const allData = getData();
   const board = allData.boards.find((board) => board.id === boardId);
-  if (!board || !Array.isArray(board[keyData])) return;
+  console.log(board[keyData])
+  if (!board ) return console.log("Mal");
   board[keyData].push(newData);
+  console.log(board)
   saveData(allData);
 };
 

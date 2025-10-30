@@ -1,5 +1,5 @@
 import { isOpen, closeAllActions } from "./utils.js";
-import { saveFilter } from "./storage.js"
+import { getData, saveFilter, getFilter } from "./storage.js"
 
 
 // Manejadores de eventos ___________________________________________________________
@@ -8,7 +8,7 @@ import { saveFilter } from "./storage.js"
 export const handleFilterButton = (e) => {
   const filterBtn = e.target.closest("#task-filter");
 
-  if (!filterBtn) return false;
+  if (!filterBtn) return;
 
   const filterGroup = document.getElementById("task-filter-group");
   if (isOpen(filterGroup)) {
@@ -25,72 +25,32 @@ export const handleFilterButton = (e) => {
 // Seleccionando una columna
 export const handleFilterOption = (e) => {
   const filterOption = e.target.closest(".task-filter__option");
-
   if (!filterOption) return false;
-
   closeAllActions();
   filter(filterOption);
-  saveFilter(filterOption.value);
+  saveFilter("525350dd-2141-4ab3-9c6e-0f6331ee6de5", filterOption.value);
   return true;
 };
 
 // Filtro _____________________________________________________________
 
 const filter = (selected) => {
-  const columnName = getColumn(selected.value);
-  hideColumn();
-  showColumn(columnName);
+  const columnSelected = document.querySelector(`[data-column-id="${selected.value}"]`);
+  const name = columnSelected.querySelector("h3").textContent
+  const columnActive = document.querySelector(".task-column.column-selected");
+  columnActive.classList.add("hidden");
+  columnActive.classList.remove("column-selected")
+  columnSelected.classList.remove("hidden");
+  columnSelected.classList.add("column-selected")
   updateMenu(selected);
-  changeSelectName(selected.value);
+  changeSelectName(name);
 };
 
-const columnIdList = {
-  new: "task-new",
-  scheduled: "task-scheduled",
-  "in-progress": "task-in-progress",
-  done: "task-done",
-};
+export const changeSelectName = (name) => document.querySelector(".task-filter__column-name").textContent = name;
 
-const getColumn = (selected) => {
-  let columnId = columnIdList[selected];
-  return document.getElementById(columnId).closest("section");
-};
-
-const columnNameList = {
-  new: " Nuevas",
-  scheduled: " Programadas",
-  "in-progress": " Iniciadas",
-  done: " Finalizadas",
-};
-
-const changeSelectName = (value) => {
-  let name = columnNameList[value];
-  const columnName = document.querySelector(".task-filter__column-name");
-  columnName.innerHTML = name;
-};
-
-const hideColumn = () => {
-  const column = document.querySelector(".column-selected");
-  column.classList.add("hidden");
-  column.classList.remove("column-selected");
-};
-
-const showColumn = (column) => {
-  column.classList.add("column-selected");
-  column.classList.remove("hidden");
-};
 
 const updateMenu = (selected) => {
   const option = document.querySelector(".task-filter__option.hidden");
   option.classList.remove("hidden");
   selected.classList.add("hidden");
-};
-
-export const loadFilter = (filterValue) => {
-  const selected = document.querySelector(`[value=${filterValue}]`);
-  const column = getColumn(selected.value);
-  hideColumn();
-  showColumn(column);
-  updateMenu(selected);
-  changeSelectName(selected.value);
 };
