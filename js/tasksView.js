@@ -20,6 +20,7 @@ export const openFormTask = (e) => {
 };
 
 // Para mantener el formulario abierto
+
 export const focusInput = (e) => {
   const form = e.target.closest(".task-form");
   if (!form) return false;
@@ -80,7 +81,6 @@ export const renderTasks = (allTasks) => {
 };
 
 const getMenuOptions = (actualColumn) => {
-  // const boardID = document.querySelector()
   const columns = getData().boards.find(
     (board) => board.id === "525350dd-2141-4ab3-9c6e-0f6331ee6de5"
   ).columns;
@@ -163,9 +163,11 @@ export const saveEditTask = (e) => {
   const newData = { text: modifiedText };
 
   // Actualiza localStrorage
+
   updateData("559954e3-59a0-40ea-9979-e30ee5dff274", "tasks", taskId, newData);
 
   // Resetear valores por defecto de la UI
+
   setReadOnly(dialog.querySelector(".modal-edit__form--text"));
   hideElement(dialog.querySelector(".modal-edit__form--btn--container"));
   showElement(dialog.querySelector(".modal-edit__form--edit"));
@@ -179,6 +181,7 @@ export const cancelEditTask = (e) => {
   const dialog = e.target.closest(".modal-edit");
 
   // Resetear texto original
+
   const taskId = dialog.dataset.taskId;
   const task = document.querySelector(`[data-task-id="${taskId}"]`);
   const originText = task.querySelector(".task-text").textContent;
@@ -220,6 +223,7 @@ export const handleActionButton = (e) => {
 };
 
 // clickeando una opción para mover la tarea
+
 export const handleMoveAction = (e) => {
   const moveActions = e.target.closest(".task-action__option");
   

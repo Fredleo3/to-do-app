@@ -6,10 +6,10 @@ export const renderBoard = (data, boardId) => {
   const board = data.boards.find((board) => board.id === boardId);
   if (board === -1) return;
   // TODO Lógica para renderizar el tablero
-  renderColumns(data, board);
+  renderColumns(board);
 };
 
-const renderColumns = (data, board) => {
+const renderColumns = (board) => {
   const columnsContainer = document.querySelector(".task-columns__container");
   const filterMenu = document.querySelector(".task-filter__group")
   const filter = getFilter("525350dd-2141-4ab3-9c6e-0f6331ee6de5")
@@ -71,4 +71,3 @@ columnId === filter ? active = "hidden" : active = ""
           </button>
   `;
 };
-

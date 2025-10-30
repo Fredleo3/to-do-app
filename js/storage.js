@@ -14,10 +14,6 @@ const saveData = (allData) => {
 
 // --- LocalStorage-Filtro
 
-// export const saveFilter = (value) => localStorage.setItem("filter", value);
-
-// boardId, keyData, newData
-
 export const getFilter = (boardId) => {
   const data = getData();
   const board = data.boards.find(board => board.id === boardId);
@@ -29,6 +25,13 @@ export const getFilter = (boardId) => {
   }
   return filter;
 };
+
+export const saveFilter = (boardId, filter) => {
+  const allData = getData();
+  const boardIndex = allData.boards.findIndex((board) => board.id === boardId);
+  allData.boards[boardIndex].columnFilter = filter
+  saveData(allData)
+} 
 
 // Inicialización del local storage de los tableros
 
@@ -97,8 +100,6 @@ export const taskTemplate = (title, columnId, position) => {
 
 export const initializeStorage = () => saveData({ boards: [boardTemplate()] });
 
-// ---------------------
-
 export const initData = () => {
   let data = JSON.parse(localStorage.getItem(STORAGE_KEY));
   if (!data) initializeStorage();
@@ -124,18 +125,8 @@ export const updateBoard = (boardId, boardData) => {
   saveData(allData);
 };
 
-// newBoard()
-
-// updateBoard("70e63738-1ac4-489f-a624-60d746ce057c", {boardName: "Trabajos"})
-
-export const saveFilter = (boardId, filter) => {
-  const allData = getData();
-  const boardIndex = allData.boards.findIndex((board) => board.id === boardId);
-  allData.boards[boardIndex].columnFilter = filter
-  saveData(allData)
-} 
-
 // Para guardar columnas, tareas y etiquetas
+
 export const saveNewData = (boardId, keyData, newData) => {
   const allData = getData();
   const board = allData.boards.find((board) => board.id === boardId);
@@ -162,7 +153,3 @@ export const updateData = (boardId, keyData, idData, newData) => {
 
   saveData(allData);
 };
-
-// saveNewInfo ( "4653214f-fa5f-44a6-8af4-2b7e634745e2", "tasks", {id: 1760323919811, text: "Nueva tarea 1", state: "new", position: 1} )
-
-// updateData("4653214f-fa5f-44a6-8af4-2b7e634745e2", "tasks", 1760323919811, {state: "nuevo estado", position: 10})

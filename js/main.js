@@ -1,38 +1,28 @@
-import {
-  handleFilterButton,
-  handleFilterOption,
-  
-} from "./filter.js"; //loadFilter,
+import { handleFilterButton, handleFilterOption } from "./filter.js";
 
-import { renderBoard } from "./boardView.js"
+import { renderBoard } from "./boardView.js";
 
 import {
-  // render,
   openFormTask,
   focusInput,
   addNewTask,
   handleActionButton,
   handleMoveAction,
-  renderTasks,
   initDragAndDrop,
   handleEditTask,
   handleCloseEditTask,
   editTask,
   saveEditTask,
-  cancelEditTask
+  cancelEditTask,
 } from "./tasksView.js";
 
-import { getFilter, initData, getData } from "./storage.js"; //getAllTasks,
+import { initData, getData } from "./storage.js";
 import { closeAllActions, showOpenerForm } from "./utils.js";
 
 // Inicialización de la aplicación
 document.addEventListener("DOMContentLoaded", () => {
-  
   initData();
   renderBoard(getData(), "525350dd-2141-4ab3-9c6e-0f6331ee6de5");
-  // renderTasks(getData());
-  // render(getData())
-  // loadFilter(getFilter("525350dd-2141-4ab3-9c6e-0f6331ee6de5"));
   initDragAndDrop();
 });
 
