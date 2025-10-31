@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do App</title>
+    <!-- <title>TasKan</title> -->
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/board.css" />
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Iconos -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,close,keyboard_arrow_down,more_vert&display=block"
+    />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1 class="title">To Do App</h1>
+        <!-- <h1 class="title">TasKan</h1> -->
+      </header>
+
+      <section class="task-filter__section">
+        <button class="task-filter__select" id="task-filter">
+          <h3 class="option-selected">
+            <span class="task-filter__column-name"></span>
+          </h3>
+          <span class="material-symbols-outlined task-filter__option-icon"
+            >keyboard_arrow_down</span
+          >
+        </button>
+
+        <section class="task-filter__group hidden" id="task-filter-group">
+          
+        </section>
+      </section>
+
+      <section class="task-columns__container">
+        
+
+      </section>
+    </main>
+
+    <dialog
+      class="modal-edit"
+      role="dialog"
+      aria-labelledby="modal-edit-title"
+      aria-modal="true"
+      closedby="any"
+      data-task-id=""
+    >
+      <header class="modal-edit__header">
+        <h3 class="modal-edit__title" id="modal-edit-title">Editar tarea</h3>
+        <button
+          class="modal-edit__close"
+          aria-label="Cerrar ventana de edición"        >
+          <span class="material-symbols-outlined"> close </span>
+        </button>
+      
+      </header>
+      <form class="modal-edit__form">
+        <button class="modal-edit__form--edit" autofocus
+          >Editar</button
+        >
+        <textarea required readonly class="modal-edit__form--text" id="edit-title">
+Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, itaque?</textarea
+        >
+
+        <div class="modal-edit__form--btn--container hidden">
+          <button class="modal-edit__form--save" type="submit">Guardar</button>
+          <button class="modal-edit__form--cancel" type="button">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
