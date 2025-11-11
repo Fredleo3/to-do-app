@@ -36,9 +36,13 @@ export const saveFilter = (boardId, filter) => {
 // Inicialización del local storage de los tableros
 
 const boardTemplate = () => {
+  let boardName = "Nuevo tablero"
+  if (!getData().boards.length) boardName = "Mi primer tablero"
+  console.log(boardName)
+  
   return {
     id: idGenerator(),
-    boardName: "Nuevo tablero",
+    boardName: boardName,
     description: "Un nuevo tablero, un nuevo proyecto",
     createdAt: actualDate(),
     updatedAt: null,
@@ -101,6 +105,7 @@ export const taskTemplate = (title, columnId, position) => {
 export const initializeStorage = () => saveData({ boards: [boardTemplate()] });
 
 export const initData = () => {
+  console.log("Inicializando")
   let data = JSON.parse(localStorage.getItem(STORAGE_KEY));
   if (!data) initializeStorage();
 };
