@@ -20,14 +20,36 @@
     <!-- Iconos -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,close,keyboard_arrow_down,more_vert&display=block"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=account_circle,add,add_box,close,keyboard_arrow_down,menu,more_vert,view_kanban&display=block"
     />
   </head>
   <body>
-    
-      
+    <header class="header-section">
+      <nav>
+        <ul class="header-section__list">
+          <li class="header-section__element">
+            <span class="header-section__logo">TasKan!</span>
+          </li>
+          <!-- <li class="header-section__element header-section__element--user">
+            Usurio
+            <span class="material-symbols-outlined "> account_circle </span>
+          </li> -->
+          <!-- <li class="header-section__element">
+            <span class="material-symbols-outlined"> menu </span>
+          </li> -->
+        </ul>
+      </nav>
+    </header>
 
-      
+    <section class="boards-section">
+      <button class="board-button">
+        <span class="material-symbols-outlined"> view_kanban </span>Mi primer
+        tablero
+      </button>
+      <button class="board-button add-board">
+        <span class="material-symbols-outlined"> add_box </span>Nuevo tablero
+      </button>
+    </section>
 
     <script type="module" src="js/main.js"></script>
   </body>
