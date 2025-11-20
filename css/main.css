@@ -126,32 +126,46 @@ body {
 /* Resposividad */
 
 @media screen and (min-width: 810px) {
+  body {
+    padding: 0 100px;
+  }
   .boards-section {
     margin: auto;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     padding: 15px;
     border-radius: 19px;
-  }
-  body {
-    padding: 0 100px;
-  }
+  }  
 }
 
 @media screen and (min-width: 1440px) {
   body {
-    padding: 0 300px;
+    padding: 0 200px;
   }
 
   .boards-section {
     padding: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 300px));
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
   .header-section {
-    padding: 50px 0 20px 0;
+    padding: 50px 0 60px 0;
   }
 
   .header-section__logo {
     font-size: 2.6rem;
+  }
+
+  .board-button {
+    font-weight: 500;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  body {
+    padding: 0 350px;
+  }
+
+  .boards-section {
+    padding: 20px;       
   }
 }
