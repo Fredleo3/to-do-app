@@ -86,7 +86,7 @@ body {
   gap: 5px;
 }
 
-.board-button {
+.board-button, .add-board {
   background-color: white;
   color: var(--text-color-2);
   font-weight: 500;
@@ -111,7 +111,7 @@ body {
 }
 /* Interacción */
 
-.board-button:hover {
+:is(.board-button, .add-board):hover {
   cursor: pointer;
   color: var(--text-color-1);
   background-color: var(--text-color-3);
