@@ -12,6 +12,17 @@ const saveData = (allData) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
 };
 
+// --- Tablero actual
+
+export const setCurrentBoard = (boardId) => {
+  localStorage.setItem("currentBoard", boardId)
+}
+
+export const getCurrentBoard = () => {
+  return localStorage.getItem("currentBoard")
+}
+
+
 // --- LocalStorage-Filtro
 
 export const getFilter = (boardId) => {
