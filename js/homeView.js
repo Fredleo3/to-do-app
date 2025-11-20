@@ -1,4 +1,4 @@
-import { getData, setCurrentBoard } from "./storage.js";
+import { getData, setCurrentBoard, newBoard } from "./storage.js";
 
 export const initBoardsList = () => {
   let data = getData();
@@ -26,21 +26,23 @@ const renderBoardList = (board) => {
 
 const renderAddButton = () => {
   return `
-    <button class="board-button add-board">
-        <span class="material-symbols-outlined"> add_box </span>Agregar tablero
-      </button>
+    <button class="add-board">
+        <span class="material-symbols-outlined"> add_box </span>Agregar tablero</button>
     `;
 };
 
 document.addEventListener("click", (e) => {
-  if (!openBoard(e)) return;
+  if (openBoard(e)) return;
+  if (addBoard(e)) return;
 });
 
 const openBoard = (e) => {
-  const boardId = e.target.value;
-  const page = document.body.dataset.page
-  console.log(page)
-  if (!boardId || page !== "home") return;
+  const boardBtn = e.target.closest(".board-button");
+  if (!boardBtn) return;
+  const boardId = boardBtn.value;
+  const page = document.body.dataset.page;
+  console.log(page);
+
   try {
     setCurrentBoard(boardId);
   } catch {
@@ -48,4 +50,11 @@ const openBoard = (e) => {
     return;
   }
   window.location.href = `board.html`;
+};
+
+const addBoard = (e) => {
+  const addBtn = e.target.closest(".add-board");
+  if (!addBtn) return;
+  newBoard();
+  initBoardsList();
 };
