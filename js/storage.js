@@ -146,10 +146,8 @@ export const updateBoard = (boardId, boardData) => {
 export const saveNewData = (boardId, keyData, newData) => {
   const allData = getData();
   const board = allData.boards.find((board) => board.id === boardId);
-  console.log(board[keyData])
   if (!board ) return console.log("Mal");
   board[keyData].push(newData);
-  console.log(board)
   saveData(allData);
 };
 

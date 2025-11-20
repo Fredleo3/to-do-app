@@ -1,8 +1,33 @@
-import { renderTasks } from "./tasksView.js";
-import { getFilter } from "./storage.js"
-import { changeSelectName } from "./filter.js"
+import {
+  renderTasks,
+  openFormTask,
+  focusInput,
+  addNewTask,
+  handleActionButton,
+  handleMoveAction,
+  handleEditTask,
+  handleCloseEditTask,
+  editTask,
+  saveEditTask,
+  cancelEditTask,
+} from "./tasksView.js";
 
-export const renderBoard = (data, boardId) => {
+import { handleFilterButton, handleFilterOption } from "./filter.js";
+
+import { closeAllActions, showOpenerForm } from "./utils.js";
+
+import { getFilter, getData, getCurrentBoard } from "./storage.js";
+
+import { changeSelectName } from "./filter.js";
+
+import { initDragAndDrop } from "./tasksView.js";
+
+export const initBoardPage = () => {
+  renderBoard(getData(), getCurrentBoard());
+  initDragAndDrop();
+};
+
+const renderBoard = (data, boardId) => {
   const board = data.boards.find((board) => board.id === boardId);
   if (board === -1) return;
   // TODO Lógica para renderizar el tablero
@@ -11,24 +36,30 @@ export const renderBoard = (data, boardId) => {
 
 const renderColumns = (board, boardId) => {
   const columnsContainer = document.querySelector(".task-columns__container");
-  const filterMenu = document.querySelector(".task-filter__group")
-  const filter = getFilter(boardId)
-  
+  const filterMenu = document.querySelector(".task-filter__group");
+  const filter = getFilter(boardId);
+
   board.columns.map((column) => {
-    columnsContainer?.insertAdjacentHTML("beforeend", columnTemplate(column.id, column.columnName, filter))  
-    filterMenu?.insertAdjacentHTML("beforeend", columnFilterTemplate(column.id, column.columnName, filter))
-    }
-  );
+    columnsContainer?.insertAdjacentHTML(
+      "beforeend",
+      columnTemplate(column.id, column.columnName, filter)
+    );
+    filterMenu?.insertAdjacentHTML(
+      "beforeend",
+      columnFilterTemplate(column.id, column.columnName, filter)
+    );
+  });
   renderTasks(board.tasks);
 };
 
 const columnTemplate = (columnId, columnName, filter) => {
-
   let selected = "";
-  if (filter === columnId ) {
-    selected =  "column-selected"
-    changeSelectName(columnName)
-  } else {selected = "hidden"} 
+  if (filter === columnId) {
+    selected = "column-selected";
+    changeSelectName(columnName);
+  } else {
+    selected = "hidden";
+  }
 
   return `
     <section
@@ -63,11 +94,32 @@ const columnTemplate = (columnId, columnName, filter) => {
 };
 
 const columnFilterTemplate = (columnId, columnName, filter) => {
-let active = ""
-columnId === filter ? active = "hidden" : active = ""
+  let active = "";
+  columnId === filter ? (active = "hidden") : (active = "");
   return `
           <button class="task-filter__option ${active}" value=${columnId}>
             ${columnName}
           </button>
   `;
 };
+
+// Listener global
+document.addEventListener("click", (e) => {
+  if (openFormTask(e)) return;
+  if (focusInput(e)) return;
+  if (handleFilterButton(e)) return;
+  if (handleFilterOption(e)) return;
+  if (handleActionButton(e)) return;
+  if (handleMoveAction(e)) return;
+  if (handleEditTask(e)) return;
+  if (handleCloseEditTask(e)) return;
+  if (editTask(e)) return;
+  if (saveEditTask(e)) return;
+  if (cancelEditTask(e)) return;
+  closeAllActions();
+  showOpenerForm();
+});
+
+document.addEventListener("submit", (e) => {
+  if (addNewTask(e)) return;
+});

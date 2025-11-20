@@ -3,6 +3,7 @@ import { getCurrentBoard, getData, saveNewData, taskTemplate, updateData } from 
 
 // Nueva tarea ______________________________________________________________________
 
+
 export const openFormTask = (e) => {
   const opener = e.target.closest(".task-form__opener");
   if (!opener) return false;
