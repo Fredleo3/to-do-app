@@ -1,5 +1,5 @@
 import { isOpen, closeAllActions, open, close } from "./utils.js";
-import { getData, saveNewData, taskTemplate, updateData } from "./storage.js";
+import { getCurrentBoard, getData, saveNewData, taskTemplate, updateData } from "./storage.js";
 
 // Nueva tarea ______________________________________________________________________
 
@@ -43,7 +43,7 @@ const newTask = (newText, inputTask) => {
   const position = getPosition(column) + 1; // Se suma 1 para contar esta tarea que no se ha renderizado
   const task = taskTemplate(newText, column.dataset.columnId, position);
 
-  saveNewData("525350dd-2141-4ab3-9c6e-0f6331ee6de5", "tasks", task);
+  saveNewData(getCurrentBoard(), "tasks", task);
   renderTasks([task]);
   inputTask.value = "";
 };
@@ -82,7 +82,7 @@ export const renderTasks = (allTasks) => {
 
 const getMenuOptions = (actualColumn) => {
   const columns = getData().boards.find(
-    (board) => board.id === "525350dd-2141-4ab3-9c6e-0f6331ee6de5"
+    (board) => board.id === getCurrentBoard()
   ).columns;
 
   if (!columns) return;
@@ -164,7 +164,7 @@ export const saveEditTask = (e) => {
 
   // Actualiza localStrorage
 
-  updateData("559954e3-59a0-40ea-9979-e30ee5dff274", "tasks", taskId, newData);
+  updateData(getCurrentBoard(), "tasks", taskId, newData);
 
   // Resetear valores por defecto de la UI
 
@@ -230,7 +230,7 @@ export const handleMoveAction = (e) => {
   if (!moveActions) return false;
 
   closeAllActions();
-  const boardId = "559954e3-59a0-40ea-9979-e30ee5dff274" // docuement.querySelector(".bord").dataset.boardId
+  const boardId = getCurrentBoard() // docuement.querySelector(".bord").dataset.boardId
   const columnTarget = moveActions.value; 
   const task = e.target.closest("li");
   moveToCol(boardId, columnTarget, task);
@@ -365,7 +365,7 @@ const saveTaskOrder = (finished) => {
       const position = index + 1;
       changePosition(task, position);
       updateData(
-        "525350dd-2141-4ab3-9c6e-0f6331ee6de5", 
+        getCurrentBoard(), 
         "tasks", task.dataset.taskId, {
         columnId: columnState,
         position: position,

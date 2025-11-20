@@ -1,5 +1,5 @@
 import { isOpen, closeAllActions } from "./utils.js";
-import { saveFilter } from "./storage.js";
+import { getCurrentBoard, saveFilter } from "./storage.js";
 
 // Manejadores de eventos ___________________________________________________________
 
@@ -29,7 +29,7 @@ export const handleFilterOption = (e) => {
   if (!filterOption) return false;
   closeAllActions();
   filter(filterOption);
-  saveFilter("525350dd-2141-4ab3-9c6e-0f6331ee6de5", filterOption.value);
+  saveFilter(getCurrentBoard(), filterOption.value);
   return true;
 };
 

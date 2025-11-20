@@ -16,7 +16,7 @@ import {
   cancelEditTask,
 } from "./tasksView.js";
 
-import { initData, getData } from "./storage.js";
+import { initData, getData, getCurrentBoard } from "./storage.js";
 import { closeAllActions, showOpenerForm } from "./utils.js";
 
 import { initBoardsList } from "./homeView.js";
@@ -48,7 +48,8 @@ const initHomePage = () => {
 };
 
 const initBoardPage = () => {
-  renderBoard(getData(), "525350dd-2141-4ab3-9c6e-0f6331ee6de5");
+  renderBoard(getData(), getCurrentBoard());
+  
   initDragAndDrop();
 
   // Listener global

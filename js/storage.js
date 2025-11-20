@@ -15,6 +15,7 @@ const saveData = (allData) => {
 // --- Tablero actual
 
 export const setCurrentBoard = (boardId) => {
+  console.log(boardId)
   localStorage.setItem("currentBoard", boardId)
 }
 
@@ -116,7 +117,6 @@ export const taskTemplate = (title, columnId, position) => {
 export const initializeStorage = () => saveData({ boards: [boardTemplate()] });
 
 export const initData = () => {
-  console.log("Inicializando")
   let data = JSON.parse(localStorage.getItem(STORAGE_KEY));
   if (!data) initializeStorage();
 };

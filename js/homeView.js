@@ -38,7 +38,9 @@ document.addEventListener("click", (e) => {
 
 const openBoard = (e) => {
   const boardId = e.target.value;
-  if (!boardId) return;
+  const page = document.body.dataset.page
+  console.log(page)
+  if (!boardId || page !== "home") return;
   try {
     setCurrentBoard(boardId);
   } catch {
