@@ -12,7 +12,6 @@
 
   --shadow-color: rgba(167, 193, 212, 0.75);
 
-
   --dragging: #ffddba;
 }
 
@@ -36,9 +35,6 @@ body {
 }
 
 main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   min-width: 100%;
 }
 
@@ -69,12 +65,56 @@ main {
 
 /* Componentes */
 
-.title {
-  text-align: center;
-  margin: 25px 0 40px 0;
-  font-weight: 800;
-  font-size: 3rem;
-  color: var(--text-color-1);
+.board-header {
+  display: flex;
+  align-items: left;
+  text-align: left;
+  padding: 35px 0;
+}
+
+.board-header__logo {
+  font-weight: 700;
+  font-size: 2rem;
+  color: white;
+  text-decoration: none;
+}
+
+.board-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 20px;
+
+  & div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+}
+
+.board-title,
+.board-description,
+.board-menu-btn {
+  background-color: transparent;
+  border: none;
+}
+
+.board-title::placeholder,
+.board-title {
+  color: var(--background-color-2);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.board-description::placeholder,
+.board-description {
+  color: var(--text-color-3);
+  font-weight: 500;
+}
+
+.board-menu-btn {
+  color: white;
 }
 
 .task-filter-title {
@@ -354,7 +394,7 @@ main {
   display: grid;
   margin: 0 20px 20px 20px;
 
-  & button{
+  & button {
     border: none;
     border-radius: 6px;
     padding: 6px 14px;
@@ -378,9 +418,9 @@ main {
 
 .modal-edit__form--edit {
   max-width: fit-content;
-  margin: 0 16px;  
-  color: white;  
-  background-color: var(--text-color-3);   
+  margin: 0 16px;
+  color: white;
+  background-color: var(--text-color-3);
 }
 
 .modal-edit__form--text {
@@ -409,6 +449,12 @@ main {
 
 /* Interacción */
 
+.board-menu-btn span:hover {
+  color: var(--text-color-3);
+  scale: 1.1;
+  cursor: pointer;
+}
+
 .modal-edit__form--text:hover {
   cursor: pointer;
 }
@@ -417,7 +463,12 @@ main {
   cursor: text;
 }
 
-:is(.task-form__submit, .task-form__opener, .modal-edit__form--save, .modal-edit__form--edit):hover {
+:is(
+    .task-form__submit,
+    .task-form__opener,
+    .modal-edit__form--save,
+    .modal-edit__form--edit
+  ):hover {
   background-color: #5999be;
   color: white;
   cursor: pointer;
@@ -499,6 +550,9 @@ main {
     padding: 0 200px;
   }
 
+  .board-info {
+    gap: 50px;
+  }
   .task-columns__container {
     flex-direction: row;
     gap: 10px;

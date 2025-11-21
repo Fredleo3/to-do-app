@@ -25,10 +25,29 @@
   </head>
   <body data-page="board">
     <main>
-      <header>
-        <h1 class="title">To Do App</h1>
-        <!-- <h1 class="title">TasKan</h1> -->
+
+      <header class="board-header">
+        <a class="board-header__logo" href="./index.html">TasKan!</a>
       </header>
+
+      <section class="board-info">
+        <div>
+          <input readonly class="board-title" type="text" placeholder="Mi primer Tablero" />
+          <textarea
+            readonly
+            class="board-description"
+            type="text"
+            placeholder="Este tablero esté dedicado al seguimiento de mis tareas diarias personales"
+          ></textarea>
+        </div>
+        <button
+          aria-label="Menú del tablero"
+          class="board-menu-btn"
+          type="button"
+        >
+          <span class="material-symbols-outlined"> more_vert </span>
+        </button>
+      </section>
 
       <section class="task-filter__section">
         <button class="task-filter__select" id="task-filter">
@@ -40,15 +59,13 @@
           >
         </button>
 
-        <section class="task-filter__group hidden" id="task-filter-group">
-          
-        </section>
+        <section
+          class="task-filter__group hidden"
+          id="task-filter-group"
+        ></section>
       </section>
 
-      <section class="task-columns__container">
-        
-
-      </section>
+      <section class="task-columns__container"></section>
     </main>
 
     <dialog
@@ -63,16 +80,19 @@
         <h3 class="modal-edit__title" id="modal-edit-title">Editar tarea</h3>
         <button
           class="modal-edit__close"
-          aria-label="Cerrar ventana de edición"        >
+          aria-label="Cerrar ventana de edición"
+        >
           <span class="material-symbols-outlined"> close </span>
         </button>
-      
       </header>
       <form class="modal-edit__form">
-        <button class="modal-edit__form--edit" autofocus
-          >Editar</button
+        <button class="modal-edit__form--edit" autofocus>Editar</button>
+        <textarea
+          required
+          readonly
+          class="modal-edit__form--text"
+          id="edit-title"
         >
-        <textarea required readonly class="modal-edit__form--text" id="edit-title">
 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, itaque?</textarea
         >
 
