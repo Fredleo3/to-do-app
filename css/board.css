@@ -98,6 +98,7 @@ main {
 .board-menu-btn {
   background-color: transparent;
   border: none;
+  border-radius: 2px;
 }
 
 .board-title::placeholder,
@@ -111,6 +112,8 @@ main {
 .board-description {
   color: var(--text-color-3);
   font-weight: 500;
+  resize: none;
+  field-sizing: content;
 }
 
 .board-menu-btn {

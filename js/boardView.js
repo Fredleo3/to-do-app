@@ -30,9 +30,17 @@ export const initBoardPage = () => {
 const renderBoard = (data, boardId) => {
   const board = data.boards.find((board) => board.id === boardId);
   if (board === -1) return;
-  // TODO Lógica para renderizar el tablero
+  renderInfo(board);
   renderColumns(board, boardId);
 };
+
+const renderInfo = (board) => {
+  const boardTitle = document.querySelector(".board-title");
+  const boardDescription = document.querySelector(".board-description");
+  boardTitle.value = board.boardName
+  console.log(board.boardName)
+  boardDescription.value = board.description
+}
 
 const renderColumns = (board, boardId) => {
   const columnsContainer = document.querySelector(".task-columns__container");
