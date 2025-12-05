@@ -31,3 +31,12 @@ export const closeAllActions = () => {
 
 export const actualDate = () => new Date().toISOString();
 export const idGenerator = () => crypto.randomUUID();
+
+
+export const hideElement = (element) => element.classList.add("hidden");
+
+export const showElement = (element) => element.classList.remove("hidden");
+
+export const removeReadOnly = (element) => element.removeAttribute("readonly");
+
+export const setReadOnly = (element) => element.setAttribute("readonly", true);

@@ -14,9 +14,9 @@ import {
 
 import { handleFilterButton, handleFilterOption } from "./filter.js";
 
-import { closeAllActions, showOpenerForm } from "./utils.js";
+import { closeAllActions, showOpenerForm, removeReadOnly, setReadOnly } from "./utils.js";
 
-import { getFilter, getData, getCurrentBoard } from "./storage.js";
+import { getFilter, getData, getCurrentBoard, updateBoard } from "./storage.js";
 
 import { changeSelectName } from "./filter.js";
 
@@ -38,7 +38,6 @@ const renderInfo = (board) => {
   const boardTitle = document.querySelector(".board-title");
   const boardDescription = document.querySelector(".board-description");
   boardTitle.value = board.boardName
-  console.log(board.boardName)
   boardDescription.value = board.description
 }
 
@@ -111,6 +110,51 @@ const columnFilterTemplate = (columnId, columnName, filter) => {
   `;
 };
 
+// Editar información del tablero
+
+const editInfo = (e) => {
+  const title = e.target.closest(".board-title")
+  const description = e.target.closest(".board-description")
+  let textName
+  if(title){
+    textName = title
+  } else if (description){
+    textName = description
+  } else return;
+  removeReadOnly(textName)
+  textName.focus()
+}
+
+const blurInfo = (e) => {
+  const title = e.target.closest(".board-title")
+  const description = e.target.closest(".board-description")
+  let textName
+  let keyName = ""
+  if(title){
+    textName = title
+    keyName = "boardName"
+  } else if (description){
+    textName = description
+    keyName = "description"
+  } else return;
+  const value = textName.value
+  setReadOnly(textName)
+  textName.blur() 
+  updateBoard(getCurrentBoard(), {[keyName]: value})
+}
+
+const infoEnter = (e) => {
+  const title = e.target.closest(".board-title")
+  const description = e.target.closest(".board-description")
+  if (title) {
+    title.blur()
+  } else if (description) {
+    description.blur()
+  } else return
+  
+}
+
+
 // Listener global
 document.addEventListener("click", (e) => {
   if (openFormTask(e)) return;
@@ -124,6 +168,7 @@ document.addEventListener("click", (e) => {
   if (editTask(e)) return;
   if (saveEditTask(e)) return;
   if (cancelEditTask(e)) return;
+  if (editInfo(e)) return;
   closeAllActions();
   showOpenerForm();
 });
@@ -131,3 +176,11 @@ document.addEventListener("click", (e) => {
 document.addEventListener("submit", (e) => {
   if (addNewTask(e)) return;
 });
+
+document.addEventListener("focusout", (e) => {
+  if (blurInfo(e)) return;
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === 'Enter') infoEnter(e) 
+})
